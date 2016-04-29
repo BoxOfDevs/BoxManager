@@ -5,6 +5,15 @@
 <link rel="stylesheet" href="/css/style-xlarge.css" />
 </head>
 <body>
+<header id="header" class="skel-layers-fixed">
+				<a href="http://boxofdevs.x10host.com"><img src="http://boxofdevs.x10host.com/BODLogo.png" height="43" width="43"></img></a>
+				<nav id="nav">
+					<ul>
+						<li><a href="signup/">Sign up</a></li>
+						<li><a href="login/">Login</a></li>
+					</ul>
+			</nav>
+</header>
 <?php
 $resources = [];
 $dir = 'resources';
@@ -38,5 +47,6 @@ foreach($files as $file) {
 	array_push($reources, $contents);
 }
 ?>
+
 </body>
 </html>

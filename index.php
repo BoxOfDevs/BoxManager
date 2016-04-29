@@ -9,7 +9,7 @@
 				<a href="http://boxofdevs.x10host.com"><img src="http://boxofdevs.x10host.com/BODLogo.png" height="43" width="43"></img></a>
 				<nav id="nav">
 					<ul>
-						<p> Welcome to the resource manager!</p>
+						<li><p>Welcome to the resource manager!</p></li>
 						<li><a href="signup/">Sign up</a></li>
 						<li><a href="login/">Login</a></li>
 					</ul>
@@ -21,50 +21,55 @@
 					<div class="row">
 <?php
 $resources = [];
+$names = [];
+$titles = [];
+$versions = [];
+$downloadlinks = [];
+$ids = [];
 $dir = 'resources';
 $files = array_diff(scandir($dir), array('..', '.')); // getting all resources
 foreach($files as $file) {
 	$contents = file_get_contents($file);
 	$lines = explode("\n", $contents);
+	$lid = 1;
 	foreach($lines as $line) {
-		if(preg_match("/:/i")) {
 			$linediff = explode(": ", $line); // Getting title, version, ect
-			switch(strtolower($linediff[0])) {
-				case "name": // if this is the title
+			switch($linediff[0]) {
+				case "Name": // if this is the title
 				unset($linediff[0]);
-				$name = implode(": ", $linediff);
+				array_push($names, implode(": ", $linediff));
 				unset($line);
 				break;
-				case "title": // if this is the title
+				case "Title": // if this is the title
 				unset($linediff[0]);
-				$title = implode(": ", $linediff);
+				array_push($titles, implode(": ", $linediff));
 				unset($line);
 				break;
-				case "version": // if this is the version
+				case "Version": // if this is the version
 				unset($linediff[0]);
-				$version = implode(": ", $linediff);
+				array_push($versions, implode(": ", $linediff));
 				unset($line);
 				break;
-				case "download": // if this is the download link
+				case "Download": // if this is the download link
 				unset($linediff[0]);
-				$dllink = implode(": ", $linediff);
+				array_push($downloadlinks, implode(": ", $linediff));
 				unset($line);
 				break;
-				case "Id": // if this is the title
+				case "Id": // if this is the id
 				unset($linediff[0]);
-				$id = $linediff[1];
+				array_push($ids, $linediff[1]);
 				unset($line);
 				break;
 			}
+		$lid++;
 		}
-	}
 	$contents = implode("\n", $lines);
 	array_push($resources, $contents);
 }
 foreach($resources as $resource) {
 	echo '<div class="4u">
 							<section class="special box">
-							<a href="resources/reader.php?thread="'. $id .'">
+							<a href="reader.php?thread="'. $id .'">
 							<img src="images/' . $name . '.png"><h3> '.$name.'</h3><br />
 							<p>  '. $title .'</p>
 							</a>

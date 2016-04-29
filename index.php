@@ -44,7 +44,7 @@ foreach($files as $file) {
 		}
 	}
 	$contents = implode("\n", $lines);
-	array_push($reources, $contents);
+	array_push($resources, $contents);
 }
 ?>
 

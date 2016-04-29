@@ -1,6 +1,10 @@
 # BoxManager
 Our very own resource manager, Note: Currently Incomplete
 
+# How to embed the rating system.
+Simply include <?php include 'HRAT/hrat.php'?> in the resource page.
+We will try and make it default but for now you have to do it manually.
+
 
 # Notes
 

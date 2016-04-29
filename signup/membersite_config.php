@@ -7,7 +7,7 @@ $fgmembersite = new FGMembersite();
 $fgmembersite->SetWebsiteName('boxofdevs.x10host.com');
 
 //Provide the admin email (notifications)
-$fgmembersite->SetAdminEmail('me@example.com');
+$fgmembersite->SetAdminEmail('contact@boxofdevs.ml');
 
 //Provide your database login details here:
 //hostname, user name, password, database name and table name

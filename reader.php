@@ -31,10 +31,16 @@ if (isset($_GET["thread"])) {
 				$dllink = implode(": ", $linesdiff);
 				unset($lines[$lid]);
 				break;
+				case "Text": // if this is the download link
+				unset($linesdiff[0]);
+				$contents = implode(": ", $linesdiff);
+				$contents = str_ireplace("", "<p>", $contents);
+				$contents = str_ireplace("\n", "<br>", $contents);
+				unset($lines[$lid]);
+				break;
 			}
 		$lid++;
 		}
-	$contents = implode("\n", $lines);
 	}
 }
 if(!isset($id)) {
@@ -60,7 +66,7 @@ if(!isset($id)) {
 </header>
 
 <section id="one" class="wrapper style1">
-<h3>Plugin <?php echo $title . " version " . $version ?></h3>
+<h3>Plugin <?php echo $name . " version " . $version ?></h3>
 				<header class="major">
 				 <div class="container">
 					<div class="row">

@@ -14,6 +14,10 @@
 					</ul>
 			</nav>
 </header>
+<section id="one" class="wrapper style1">
+				<header class="major">
+				<div class="container">
+					<div class="row">
 <?php
 $resources = [];
 $dir = 'resources';
@@ -23,21 +27,31 @@ foreach($files as $file) {
 	$lines = explode("\n", $contents);
 	foreach($lines as $line) {
 		if(preg_match("/:/i")) {
-			$linediff = explode(":", $line); // Getting title, version, ect
+			$linediff = explode(": ", $line); // Getting title, version, ect
 			switch(strtolower($linediff[0])) {
-				case "title": // if this is the title
+				case "name": // if this is the title
 				unset($linediff[0]);
-				$title = implode(":", $linediff);
+				$name = implode(": ", $linediff);
 				unset($line);
 				break;
-				case "version": // if this is the vzrsion
+				case "title": // if this is the title
 				unset($linediff[0]);
-				$version = implode(":", $linediff);
+				$title = implode(": ", $linediff);
+				unset($line);
+				break;
+				case "version": // if this is the version
+				unset($linediff[0]);
+				$version = implode(": ", $linediff);
 				unset($line);
 				break;
 				case "download": // if this is the download link
 				unset($linediff[0]);
-				$dllink = implode(":", $linediff);
+				$dllink = implode(": ", $linediff);
+				unset($line);
+				break;
+				case "Id": // if this is the title
+				unset($linediff[0]);
+				$id = $linediff[1];
 				unset($line);
 				break;
 			}
@@ -46,7 +60,17 @@ foreach($files as $file) {
 	$contents = implode("\n", $lines);
 	array_push($resources, $contents);
 }
-?>
+foreach($resources as $resource) {
+	echo '<div class="4u">
+							<section class="special box">
+							<a href="resources/reader.php?thread="'. $id .'">
+							<img src="images/' . $name . '.png"><h3> '.$name.'</h3><br />
+							<p>  '. $title .'</p>
+							</a>
+							</section>
+					</div>';
+}
+?></div></div></header></section>
 
 </body>
 </html>

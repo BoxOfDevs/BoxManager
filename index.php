@@ -20,63 +20,48 @@
 				<div class="container">
 					<div class="row">
 <?php
-$resources = [];
-$names = [];
-$titles = [];
-$versions = [];
-$downloadlinks = [];
-$ids = [];
-$dir = 'resources';
-$files = array_diff(scandir($dir), array('..', '.')); // getting all resources
-foreach($files as $file) {
-	$contents = file_get_contents($file);
-	$lines = explode("\n", $contents);
+foreach(scandir("resources/") as $file) {
+	$contents = file_get_contents("resources". DIRECTORY_SEPARATOR . $file);
+	$lines = explode(PHP_EOL, $contents);
 	$lid = 1;
 	foreach($lines as $line) {
 			$linediff = explode(": ", $line); // Getting title, version, ect
 			switch($linediff[0]) {
 				case "Name": // if this is the title
 				unset($linediff[0]);
-				array_push($names, implode(": ", $linediff));
+				$names = $linediff[1];
 				unset($line);
 				break;
 				case "Title": // if this is the title
 				unset($linediff[0]);
-				array_push($titles, implode(": ", $linediff));
+				$titles = $linediff[1];
 				unset($line);
 				break;
 				case "Version": // if this is the version
 				unset($linediff[0]);
-				array_push($versions, implode(": ", $linediff));
+				$versions = $linediff[1];
 				unset($line);
 				break;
 				case "Download": // if this is the download link
 				unset($linediff[0]);
-				array_push($downloadlinks, implode(": ", $linediff));
+				$downloadlinks = $linediff[1];
 				unset($line);
 				break;
 				case "Id": // if this is the id
 				unset($linediff[0]);
-				array_push($ids, $linediff[1]);
+				$ids = $linediff[1];
 				unset($line);
 				break;
 			}
 		$lid++;
 		}
-	$contents = implode("\n", $lines);
-	array_push($resources, $contents);
+		echo "<div class='4u'><section class='special box'><a href='reader.php?thread=$ids'><img src='images/$names.png'><h3>$names</h3><br /><p>$titles</p></a></section></div>";
 }
-foreach($resources as $resource) {
-	echo '<div class="4u">
-							<section class="special box">
-							<a href="reader.php?thread="'. $id .'">
-							<img src="images/' . $name . '.png"><h3> '.$name.'</h3><br />
-							<p>  '. $title .'</p>
-							</a>
-							</section>
-					</div>';
-}
-?></div></div></header></section>
+?>
+</div>
+</div>
+</header>
+</section>
 
 </body>
 </html>

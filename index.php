@@ -9,6 +9,7 @@
 				<a href="http://boxofdevs.x10host.com"><img src="http://boxofdevs.x10host.com/BODLogo.png" height="43" width="43"></img></a>
 				<nav id="nav">
 					<ul>
+						<p> Welcome to the resource manager!</p>
 						<li><a href="signup/">Sign up</a></li>
 						<li><a href="login/">Login</a></li>
 					</ul>

@@ -1,69 +1,95 @@
-<?php
-$usernameError = $emailError = $passwordError = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	if (empty($_POST["name"])) {
-		$usernameError = "Please enter an username";
-	} elseif(empty($_POST["email"])) {
-		$emailError = "Please enter an email";
-	} elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-		$emailError = "Please enter a valid email";
-	} elseif(empty($_POST["password"])) {
-		$passwordError = "Please enter a password";
-	} elseif($_POST["password"] ===! $_POST["confirmpassword"]) {
-		$passwordError = "Passwords not match";
-	}
-$host = "localhost"; //Those are to complete with MySQL informations
-$user = "";
-$password = "";
-$mysql = connection mysql_connect($host, $user, $password);
-$db = mysql_select_db("users", $mysql );
-$cmd = "INSERT INTO users (name, password, email) VALUES ($_POST['name'], $_POST['password'], $_POST['email']);"
-} else {
-	echo "<p> Fill the form to register!</p>";
+<?PHP
+require_once("membersite_config.php");
+
+if(isset($_POST['submitted']))
+{
+   if($fgmembersite->RegisterUser())
+   {
+        $fgmembersite->RedirectToURL("thank-you.html");
+   }
 }
+
 ?>
-<html><head><title>BoxManager - Sign Up</title>
-<link rel="icon" href="favicon.png" />
-<link rel="stylesheet" href="/css/skel.css" />
-<link rel="stylesheet" href="/css/style.css" />
-<link rel="stylesheet" href="/css/style-xlarge.css" >
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+    <title>Contact us</title>
+    <link rel="STYLESHEET" type="text/css" href="style/fg_membersite.css" />
+    <script type='text/javascript' src='scripts/gen_validatorv31.js'></script>
+    <link rel="STYLESHEET" type="text/css" href="style/pwdwidget.css" />
+    <script src="scripts/pwdwidget.js" type="text/javascript"></script>      
 </head>
 <body>
-<style>
-.error {color: #FF0000;}
-</style>
-<header id="header" class="skel-layers-fixed">
-				<a href="http://boxofdevs.ml"><img src="http://boxofdevs.ml/BODLogo.png" height="43" width="43"></img></a>
-				<nav id="nav">
-					<ul>
-						<li><a href="signup/">Sign up</a></li>
-						<li><a href="login/">Login</a></li>
-					</ul>
-			</nav>
-</header>
-<section id="one" class="wrapper style1">
-				<header class="major">
-				<div class="container">
-					<div class="row">
-					<center>
-					<div class="4u">
-							<section class="special box">
-							Username: <input type="text" name="name" value="<?php echo $_POST["username"];?>">
-							<span class="error">* <?php echo $usernameError;?></span>
-							<br><br>
-							Email: <input type="text" name="email" value="<?php echo $_POST["email"];?>">
-							<span class="error">* <?php echo $emailError;?></span>
-							<br><br>
-							Password: <input type="password" name="password" value="<?php echo $_POST["password"];?>">
-							<span class="error">* <?php echo $passwordError;?></span>
-							Confirm password: <input type="password" name="confirmpassword" value="<?php echo $_POST["password"];?>">
-							<span class="error">* <?php echo $passwordError;?></span>
-							</section>
-					</div>
-					</center>
-					</div>
-				</div>
-				</header>
-</section>
-</body>
-</html>
+
+<!-- Form Code Start -->
+<div id='fg_membersite'>
+<form id='register' action='<?php echo $fgmembersite->GetSelfScript(); ?>' method='post' accept-charset='UTF-8'>
+<fieldset >
+<legend>Register</legend>
+
+<input type='hidden' name='submitted' id='submitted' value='1'/>
+
+<div class='short_explanation'>* required fields</div>
+<input type='text'  class='spmhidip' name='<?php echo $fgmembersite->GetSpamTrapInputName(); ?>' />
+
+<div><span class='error'><?php echo $fgmembersite->GetErrorMessage(); ?></span></div>
+<div class='container'>
+    <label for='name' >Your Full Name*: </label><br/>
+    <input type='text' name='name' id='name' value='<?php echo $fgmembersite->SafeDisplay('name') ?>' maxlength="50" /><br/>
+    <span id='register_name_errorloc' class='error'></span>
+</div>
+<div class='container'>
+    <label for='email' >Email Address*:</label><br/>
+    <input type='text' name='email' id='email' value='<?php echo $fgmembersite->SafeDisplay('email') ?>' maxlength="50" /><br/>
+    <span id='register_email_errorloc' class='error'></span>
+</div>
+<div class='container'>
+    <label for='username' >UserName*:</label><br/>
+    <input type='text' name='username' id='username' value='<?php echo $fgmembersite->SafeDisplay('username') ?>' maxlength="50" /><br/>
+    <span id='register_username_errorloc' class='error'></span>
+</div>
+<div class='container' style='height:80px;'>
+    <label for='password' >Password*:</label><br/>
+    <div class='pwdwidgetdiv' id='thepwddiv' ></div>
+    <noscript>
+    <input type='password' name='password' id='password' maxlength="50" />
+    </noscript>    
+    <div id='register_password_errorloc' class='error' style='clear:both'></div>
+</div>
+
+<div class='container'>
+    <input type='submit' name='Submit' value='Submit' />
+</div>
+
+</fieldset>
+</form>
+<!-- client-side Form Validations:
+Uses the excellent form validation script from JavaScript-coder.com-->
+
+<script type='text/javascript'>
+// <![CDATA[
+    var pwdwidget = new PasswordWidget('thepwddiv','password');
+    pwdwidget.MakePWDWidget();
+    
+    var frmvalidator  = new Validator("register");
+    frmvalidator.EnableOnPageErrorDisplay();
+    frmvalidator.EnableMsgsTogether();
+    frmvalidator.addValidation("name","req","Please provide your name");
+
+    frmvalidator.addValidation("email","req","Please provide your email address");
+
+    frmvalidator.addValidation("email","email","Please provide a valid email address");
+
+    frmvalidator.addValidation("username","req","Please provide a username");
+    
+    frmvalidator.addValidation("password","req","Please provide a password");
+
+// ]]>
+</script>
+
+<!--
+Form Code End
+-->
+
+</body></html>

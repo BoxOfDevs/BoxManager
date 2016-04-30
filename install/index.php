@@ -91,22 +91,7 @@
 								}
 							    $id++;
 							}
-						echo "<div class='row'>
-					<section class='special box'>
-					<center><p>MySQL Database</p><center>
-					<form action='index.php?step=3' method='post' id='install2'>
-					<label for='dataadress'>Where is your database located? *</label>
-					<input type='text' id='dataadress' name='dataadress' value='<? echo $databaseadress?>'/>
-					<label for='dataname'>What's your database name ? *</label>
-					<input type='text' id='dataname' name='dataname'  value='<? echo $databasename ?>'/>
-					<label for='dataname'>What's your database admin username ? *</label>
-					<input type='text' id='dataadminname' name='dataadminname'  value='<? echo $databaseadminname ?>'/>
-					<label for='dataadminpass'>What's your database user password? *</label>
-					<input type='password' id='dataadminpass' name='dataadminpass'  value='<? echo $dataadminpass ?>'/>
-					</form>
-					</section>
-					</div>
-					</div>";
+						echo "You have succefully setup BoxManager! <a href='delete.php'>Click here</a> to delete the installation files!";
 						}
 					}
 				} else {

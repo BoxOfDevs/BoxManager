@@ -71,7 +71,7 @@
 						} elseif(!isset($_POST['dataadminpass'])) {
 							echo "<script>alert('Error, please enter your database admin password'); location.replace('index.php?step=2');</script>"
 						} else {
-							$config = explode(PHP_EOL, file_get_contents("../config/config.yml"));
+							$config = explode(PHP_EOL, file_get_contents("../configs/config.yml"));
 							$id = 0;
 							foreach($config as $line) {
 								$part = explode(": ", $line);

@@ -17,11 +17,11 @@ if(isset($username, $password)) {
     $count=mysqli_num_rows($result);
     // If result matched $myusername and $mypassword, table row must be 1 row
     if($count==1){
-        // Register $myusername, $mypassword and redirect to file "admin.php"
+        // Register $myusername, $mypassword and redirect to admin
         session_register("admin");
         session_register("password");
         $_SESSION['name']= $myusername;
-        header("location:admin.php");
+        header("location:admin/index.php");
     }
     else {
         $msg = "Wrong Username or Password. Please retry";

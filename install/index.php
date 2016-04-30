@@ -82,10 +82,10 @@
 									case "Database name":
 									$config[$id] = "Database name: $_POST['dataname']";
 									break;
-									case "Admin username":
+									case "Database admin username":
 									$config[$id] = "Admin username: $_POST['adminname']";
 									break;
-									case "Admin password":
+									case "Database admin password":
 									$config[$id] = "Site name: $_POST['adminpass']";
 									break;
 								}

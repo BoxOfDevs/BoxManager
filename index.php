@@ -1,12 +1,16 @@
 <html><head><title>BoxManager</title>
 <link rel="icon" href="favicon.png" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/skel-layers.min.js"></script>
+<script src="/js/init.js"></script>
 <link rel="stylesheet" href="/css/skel.css" />
 <link rel="stylesheet" href="/css/style.css" />
 <link rel="stylesheet" href="/css/style-xlarge.css" />
 </head>
 <body>
 <header id="header" class="skel-layers-fixed">
-				<a href="http://boxofdevs.x10host.com"><img src="http://boxofdevs.x10host.com/BODLogo.png" height="43" width="43"></img></a>
+				<a href="/"><img src="favicon.ico" height="43" width="43"></img></a>
 				<nav id="nav">
 					<ul>
 						<li><p>Welcome to the resource manager!</p></li>
@@ -20,7 +24,10 @@
 				<div class="container">
 					<div class="row">
 <?php
-foreach(scandir("resources/") as $file) {
+if(file_exists("install/index.php")) {
+	echo "<script>location.replace('install/index.php')</script>";
+}
+foreach(array_diff(scandir("resources/"), array('..', '.')) as $file) {
 	$contents = file_get_contents("resources". DIRECTORY_SEPARATOR . $file);
 	$lines = explode(PHP_EOL, $contents);
 	$lid = 1;
@@ -55,7 +62,7 @@ foreach(scandir("resources/") as $file) {
 			}
 		$lid++;
 		}
-		echo "<div class='4u'><section class='special box'><a href='reader.php?thread=$ids'><img src='images/$names.png'><h3>$names</h3><br /><p>$titles</p></a></section></div>";
+		    echo "<div class='4u'><section class='special box'><a href='reader.php?thread=$ids'><img src='images/$names.png'></img><h3>$names</h3><br /><p>$titles</p></a></section></div>";
 }
 ?>
 </div>

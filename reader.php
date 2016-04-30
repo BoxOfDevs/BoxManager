@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET["thread"])) {
 	$id = htmlspecialchars($_GET["thread"]);
-	echo $id;
+	
 	if(!file_exists("resources/$id.thread")) {
 		header("Location: http://boxofdevs.ml/software/index.php");
 	} else {
@@ -34,8 +34,8 @@ if (isset($_GET["thread"])) {
 				case "Text": // if this is the download link
 				unset($linesdiff[0]);
 				$contents = implode(": ", $linesdiff);
-				$contents = str_ireplace("", "<p>", $contents);
-				$contents = str_ireplace("\n", "<br>", $contents);
+				$contents = str_ireplace("+i+", "<i>", $contents);
+				$contents = str_ireplace("\n", "<br />", $contents);
 				unset($lines[$lid]);
 				break;
 			}
@@ -53,6 +53,10 @@ if(!isset($id)) {
 <link rel="stylesheet" href="/css/skel.css" />
 <link rel="stylesheet" href="/css/style.css" />
 <link rel="stylesheet" href="/css/style-xlarge.css" />
+<script src="/js/jquery.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/skel-layers.min.js"></script>
+<script src="/js/init.js"></script>
 </head>
 <body>
 <header id="header" class="skel-layers-fixed">
@@ -66,14 +70,12 @@ if(!isset($id)) {
 </header>
 
 <section id="one" class="wrapper style1">
-<h3>Plugin <?php echo $name . " version " . $version ?></h3>
+<center><img src='images/<? echo $name ?>.png'></img><h3>Resource <?php echo $name . " version " . $version ?></h3></center><center><a class="button big special" href="<? echo $dllink?>">Download plugin</a></center>
 				<header class="major">
 				 <div class="container">
-					<div class="row">
 					 <section class="special box">
 					 <?php echo $contents ?>
 					 </section>
-					</div>
 				</div>
 			</header>
 </section>

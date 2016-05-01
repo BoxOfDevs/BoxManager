@@ -75,6 +75,7 @@ if(!isset($id)) {
 				 <div class="container">
 					 <section class="special box">
 					 <?php echo $contents ?>
+					 <?php include 'ratings/hrat.php'?>
 					 </section>
 				</div>
 			</header>

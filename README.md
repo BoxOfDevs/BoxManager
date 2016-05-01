@@ -14,7 +14,7 @@ With knowledge, you are able to customise how the forms look.
 
 # Legal stuff
 
-This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+This work is licensed under the BoxOfDevs license.
 
 This means that if you use **any** of the code, you must give us appropriate credit, [contact us] (http://forums.boxofdevs.ml) if you need help with it.
 

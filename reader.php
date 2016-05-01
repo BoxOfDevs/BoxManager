@@ -81,4 +81,5 @@ if(!isset($id)) {
 			</header>
 </section>
 </body>
+<p><a href="http://boxofdevs.ml>© 2016 BoxManager - BoxOfDevs team.</a></p>
 </html>

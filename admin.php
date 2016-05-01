@@ -6,6 +6,14 @@
 </head>
 <body>
 <?php
+ 
+$dirname = $_POST["search"];
+$filename = "/install/" . $dirname . "/";
+
+if (!file_exists($filename)) {
+    echo "WARNING! The install/ directory HAS NOT been deleted! Please delete it!;
+    exit;
+ 
     $login_form = <<<EOD
 <form name="login" id="login" method="POST" action="acplogin/check_login.php">
 <p><label for="username">Please Enter Username: </label><input type="text" size="100" name="username" id="username" value="Enter Username here" /></p>

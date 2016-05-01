@@ -14,6 +14,7 @@ if(!isset($_POST['AuthorAccName']) or empty($_POST['AuthorAccName'])) {
 	$error = "Please enter your resource description.";
 } elseif(!isset($_POST['DownloadLink']) or empty($_POST['DownloadLink'])) {
 	$error = "Please enter a resource link to download."; // someone knows how to make uploaded files?
+	// Use: <input type=file id=’file’ "/>
 } elseif($_SERVER["REQUEST_METHOD"] == "POST") {
 	$username = $_POST['AuthorAccName'];
 	$password = $_POST['AuthorAccPass'];
@@ -37,6 +38,8 @@ if(!isset($_POST['AuthorAccName']) or empty($_POST['AuthorAccName'])) {
 <html>
 <head>
 <title>Upload a resource</title>
+
+<!-- These don't exist! Remove this comment when you do something about it. -->
 <link rel="stylesheet" href="/css/skel.css" />
 <link rel="stylesheet" href="/css/style.css" />
 <link rel="stylesheet" href="/css/style-xlarge.css" />

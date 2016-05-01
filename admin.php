@@ -27,4 +27,5 @@ echo "<h1>Please enter your Login Information</h1>";
 echo $login_form;
 ?>
 </body>
+<p><a href="http://boxofdevs.ml>© 2016 BoxManager - BoxOfDevs team.</a></p>
 </html>

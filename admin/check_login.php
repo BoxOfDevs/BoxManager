@@ -21,7 +21,7 @@ if(isset($username, $password)) {
         session_register("admin");
         session_register("password");
         $_SESSION['name']= $myusername;
-        header("location:index.php");
+        header("location:admin/index.php");
     }
     else {
         $msg = "Wrong Username or Password. Please retry";

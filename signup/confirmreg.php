@@ -1,5 +1,5 @@
 <?PHP
-require_once("./include/membersite_config.php");
+require_once("membersite_config.php");
 
 if(isset($_GET['code']))
 {

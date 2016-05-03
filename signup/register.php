@@ -1,5 +1,5 @@
 <?PHP
-require_once("signup/membersite_config.php");
+require_once("membersite_config.php");
 
 if(isset($_POST['submitted']))
 {

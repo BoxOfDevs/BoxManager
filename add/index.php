@@ -4,7 +4,7 @@ require_once("./login/membersite_config.php"); // Check config
 
 if(!$fgmembersite->CheckLogin()) // Check login
 {
-	echo "<script>location.replace('login.php');</script>"
+	echo "<script>location.replace('login.php');</script>";
     $fgmembersite->RedirectToURL("login.php"); // If not logged in, redirect.
 }
 $error = "";

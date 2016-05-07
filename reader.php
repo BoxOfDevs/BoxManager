@@ -1,15 +1,17 @@
 <?php
+error_reporting(-1);
+require_once("parser.php");
 if (isset($_GET["thread"])) {
 	$id = htmlspecialchars($_GET["thread"]);
 	
 	if(!file_exists("resources/$id.thread")) {
-		header("Location: http://boxofdevs.ml/software/index.php");
+	echo "<script>location.replace('index.php');</script>";
 	} else {
 	$contents = file_get_contents("resources/$id.thread");
 	$lines = explode("\n", $contents);
 	$lid = 1;
 	foreach($lines as $line) {
-			$linesdiff = explode(": ", $lines[$lid]); // Getting title, version, ect
+			$linesdiff = explode(": ", $line); // Getting title, version, ect
 			switch($linesdiff[0]) {
 				case "Name": // if this is the title
 				unset($linesdiff[0]);
@@ -34,8 +36,8 @@ if (isset($_GET["thread"])) {
 				case "Text": // if this is the download link
 				unset($linesdiff[0]);
 				$contents = implode(": ", $linesdiff);
-				$contents = str_ireplace("+i+", "<i>", $contents);
-				$contents = str_ireplace("\n", "<br />", $contents);
+				$parse = new Parser();
+				$contents = $parse->parse($contents);
 				unset($lines[$lid]);
 				break;
 			}
@@ -44,7 +46,7 @@ if (isset($_GET["thread"])) {
 	}
 }
 if(!isset($id)) {
-	header("Location: http://boxofdevs.ml/software/index.php");
+	echo "<script>location.replace('index.php');</script>";
 }
 ?>
 <html>

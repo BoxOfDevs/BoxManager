@@ -21,11 +21,11 @@
 					switch($_GET["step"]) {
 						case "2":
 						if(!isset($_POST['sitename'])) {
-							echo "<script>alert('Error, please enter a website name'); location.replace('index.php');</script>"
+							echo "<script>alert('Error, please enter a website name'); location.replace('index.php');</script>";
 						} elseif(!isset($_POST['adminname'])) {
-							echo "<script>alert('Error, please enter an admin username'); location.replace('index.php');</script>"
+							echo "<script>alert('Error, please enter an admin username'); location.replace('index.php');</script>";
 						} elseif(!isset($_POST['adminpass'])) {
-							echo "<script>alert('Error, please enter an admin password'); location.replace('index.php');</script>"
+							echo "<script>alert('Error, please enter an admin password'); location.replace('index.php');</script>";
 						} else {
 							$config = explode(PHP_EOL, file_get_contents("../config/config.yml"));
 							$id = 0;
@@ -63,13 +63,13 @@
 						}
 						case "3":
 						if(!isset($_POST['dataadress'])) {
-							echo "<script>alert('Error, please enter your database adress'); location.replace('index.php?step=2');</script>"
+							echo "<script>alert('Error, please enter your database adress'); location.replace('index.php?step=2');</script>";
 						} elseif(!isset($_POST['dataname'])) {
-							echo "<script>alert('Error, please enter your database name'); location.replace('index.php?step=2');</script>"
+							echo "<script>alert('Error, please enter your database name'); location.replace('index.php?step=2');</script>";
 						} elseif(!isset($_POST['dataadminname'])) {
-							echo "<script>alert('Error, please enter your database admin username'); location.replace('index.php?step=2');</script>"
+							echo "<script>alert('Error, please enter your database admin username'); location.replace('index.php?step=2');</script>";
 						} elseif(!isset($_POST['dataadminpass'])) {
-							echo "<script>alert('Error, please enter your database admin password'); location.replace('index.php?step=2');</script>"
+							echo "<script>alert('Error, please enter your database admin password'); location.replace('index.php?step=2');</script>";
 						} else {
 							$config = explode(PHP_EOL, file_get_contents("../configs/config.yml"));
 							$id = 0;

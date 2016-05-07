@@ -50,7 +50,9 @@ error_reporting(-1);
 							    $id++;
 							}
 							$databaseadress = $databasename = $databaseadminname = $databaseadminpass = "";
-					echo "<div class='container'>
+					echo "<div class='container'  style='display: false'>
+					</div>
+					<div class='container'>
 					<div class='row'>
 					<section class='special box'>
 					<center><p>MySQL Database</p><center>
@@ -105,7 +107,9 @@ error_reporting(-1);
 					}
 				} else {
 					$sitename = $adminname = $adminpass = "";
-					echo "<div class='container'>
+					echo "<div class='container'  style='display: false'>
+					</div>
+					<div class='container'>
 					<div class='row'>
 					<section class='special box'>
 					<center><p>You will need to complete all the forms that will shown 1 by 1 about your website.</p></center>

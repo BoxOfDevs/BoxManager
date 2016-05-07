@@ -1,15 +1,18 @@
 <?php
 error_reporting(-1);
 require_once("parser.php");
+require_once("config-types/yaml.php");
 if (isset($_GET["thread"])) {
 	$id = htmlspecialchars($_GET["thread"]);
 	
 	if(!file_exists("resources/$id.thread")) {
 	echo "<script>location.replace('index.php');</script>";
 	} else {
+		$cfg = new YamlConfig("resources/$id.thread")
+		$name = $cfg->get("Name");
+		$
 	$contents = file_get_contents("resources/$id.thread");
 	$lines = explode("\n", $contents);
-	$lid = 1;
 	foreach($lines as $line) {
 			$linesdiff = explode(": ", $line); // Getting title, version, ect
 			switch($linesdiff[0]) {
@@ -41,7 +44,6 @@ if (isset($_GET["thread"])) {
 				unset($lines[$lid]);
 				break;
 			}
-		$lid++;
 		}
 	}
 }
@@ -72,7 +74,7 @@ if(!isset($id)) {
 </header>
 
 <section id="one" class="wrapper style1">
-<center><img src='images/<? echo $name ?>.png'></img><h3>Resource <?php echo $name . " version " . $version ?></h3></center><center><a class="button big special" href="<? echo $dllink?>">Download plugin</a></center>
+<center><img src='images/<? echo $name ?>.png'></img><h3>Resource <?php echo $name . " version " . $version ?></h3></center><center><a class="button big special" href="<? echo $dllink?>">Download resource</a></center>
 				<header class="major">
 				 <div class="container">
 					 <section class="special box">

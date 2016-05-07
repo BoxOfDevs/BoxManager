@@ -62,7 +62,7 @@ if(!isset($id)) {
 </head>
 <body>
 <header id="header" class="skel-layers-fixed">
-				<a href="http://boxofdevs.ml"><img src="http://boxofdevs.ml/BODLogo.png" height="43" width="43"></img></a>
+				<a href="/"><img src="images/logo.png" height="43" width="43"></img></a>
 				<nav id="nav">
 					<ul>
 						<li><a href="signup/">Sign up</a></li>
@@ -83,5 +83,5 @@ if(!isset($id)) {
 			</header>
 </section>
 </body>
-<p><a href="http://boxofdevs.ml>© 2016 BoxManager - BoxOfDevs team.</a></p>
+<p><a href="http://boxofdevs.ml">© 2016 BoxManager - BoxOfDevs team.</a></p>
 </html>

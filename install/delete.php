@@ -13,6 +13,9 @@
 <body>
 <p>Please wait until deleting is finished...</p>
 <?php
+error_reporting(-1);
+unlink("index.php");
+unlink("delete.php");
 rmdir("../install");
 ?>
 </body>

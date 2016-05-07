@@ -10,7 +10,7 @@
 </head>
 <body>
 <header id="header" class="skel-layers-fixed">
-				<a href="/"><img src="favicon.ico" height="43" width="43"></img></a>
+				<a href="/"><img src="images/logo.png" height="43" width="43"></img></a>
 				<nav id="nav">
 					<ul>
 						<li><p>Welcome to the resource manager!</p></li>

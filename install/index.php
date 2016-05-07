@@ -1,4 +1,9 @@
-<html><head><title>Installation of BoxManager</title>
+<?php
+error_reporting(-1);
+?>
+<html>
+<head>
+<title>Installation of BoxManager</title>
 <link rel="icon" href="favicon.png" />
 <script src="/js/jquery.min.js"></script>
 <script src="/js/skel.min.js"></script>
@@ -27,40 +32,44 @@
 						} elseif(!isset($_POST['adminpass'])) {
 							echo "<script>alert('Error, please enter an admin password'); location.replace('index.php');</script>";
 						} else {
-							$config = explode(PHP_EOL, file_get_contents("../config/config.yml"));
+							$config = explode(PHP_EOL, file_get_contents("../configs/config.yml"));
 							$id = 0;
 							foreach($config as $line) {
 								$part = explode(": ", $line);
 								switch($part[0]) {
 									case "Site name":
-									$config[$id] = "Site name: $_POST['sitename']";
+									$config[$id] = "Site name: ".$_POST['sitename'];
 									break;
 									case "Admin username":
-									$config[$id] = "Admin username: $_POST['adminname']";
+									$config[$id] = "Admin username: ". $_POST['adminname'];
 									break;
 									case "Admin password":
-									$config[$id] = "Site name: $_POST['adminpass']";
+									$config[$id] = "Site name: ". $_POST['adminpass'];
 									break;
 								}
 							    $id++;
 							}
-						echo "<div class='row'>
+							$databaseadress = $databasename = $databaseadminname = $databaseadminpass = "";
+					echo "<div class='container'>
+					<div class='row'>
 					<section class='special box'>
 					<center><p>MySQL Database</p><center>
-					<form action='index.php?step=4' method='post' id='install2'>
+					<form action='index.php?step=3' method='post' id='install2'>
 					<label for='dataadress'>Where is your database located? *</label>
-					<input type='text' id='dataadress' name='dataadress' value='<? echo $databaseadress?>'/>
+					<input type='text' id='dataadress' name='dataadress' value='".$databaseadress."'/>
 					<label for='dataname'>What's your database name ? *</label>
-					<input type='text' id='dataname' name='dataname'  value='<? echo $databasename ?>'/>
+					<input type='text' id='dataname' name='dataname'  value='".$databasename."'/>
 					<label for='dataname'>What's your database admin username ? *</label>
-					<input type='text' id='dataadminname' name='dataadminname'  value='<? echo $databaseadminname ?>'/>
+					<input type='text' id='dataadminname' name='dataadminname'  value='".$databaseadminname."'/>
 					<label for='dataadminpass'>What's your database user password? *</label>
-					<input type='password' id='dataadminpass' name='dataadminpass'  value='<? echo $dataadminpass ?>'/>
+					<input type='password' id='dataadminpass' name='dataadminpass'  value='".$databaseadminpass."'/>
+					<input type='submit' id='submit' value='Submit' name='submit' />
 					</form>
 					</section>
 					</div>
 					</div>";
 						}
+						break;
 						case "3":
 						if(!isset($_POST['dataadress'])) {
 							echo "<script>alert('Error, please enter your database adress'); location.replace('index.php?step=2');</script>";
@@ -77,16 +86,16 @@
 								$part = explode(": ", $line);
 								switch($part[0]) {
 									case "Database address":
-									$config[$id] = "Database name: $_POST['dataname']";
+									$config[$id] = "Database adress: ". $_POST['dataadress'];
 									break;
 									case "Database name":
-									$config[$id] = "Database name: $_POST['dataname']";
+									$config[$id] = "Database name: ". $_POST['dataname'];
 									break;
 									case "Database admin username":
-									$config[$id] = "Admin username: $_POST['adminname']";
+									$config[$id] = "Database admin username: ".$_POST['dataadminname'];
 									break;
 									case "Database admin password":
-									$config[$id] = "Site name: $_POST['adminpass']";
+									$config[$id] = "Database admin password: ".$_POST['dataadminpass'];
 									break;
 								}
 							    $id++;
@@ -102,11 +111,12 @@
 					<center><p>You will need to complete all the forms that will shown 1 by 1 about your website.</p></center>
 					<form action='index.php?step=2' method='post' id='install1'>
 					<label for='sitename'>What's your website name? *</label>
-					<input type='text' id='sitename' name='sitename' value='<? echo $sitename?>'/>
+					<input type='text' id='sitename' name='sitename' value='".$sitename."'/>
 					<label for='adminname'>What's your username (will be used for administrator account)? *</label>
-					<input type='text' id='adminname' name='adminname'  value='<? echo $adminname ?>'/>
+					<input type='text' id='adminname' name='adminname'  value='".$adminname ."'/>
 					<label for='adminpass'>What's your database admin password?* (will be used for administrator account) *</label>
-					<input type='password' id='adminpass' name='adminpass'  value='<? echo $adminpass ?>'/>
+					<input type='password' id='adminpass' name='adminpass'  value='".$adminpass."'/>
+					<input type='submit' id='submit' value='Submit' name='submit' />
 					</form>
 					</section>
 					</div>

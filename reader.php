@@ -8,43 +8,14 @@ if (isset($_GET["thread"])) {
 	if(!file_exists("resources/$id.thread")) {
 	echo "<script>location.replace('index.php');</script>";
 	} else {
-		$cfg = new YamlConfig("resources/$id.thread")
+		$cfg = new YamlConfig("resources/$id.thread");
 		$name = $cfg->get("Name");
-		$
-	$contents = file_get_contents("resources/$id.thread");
-	$lines = explode("\n", $contents);
-	foreach($lines as $line) {
-			$linesdiff = explode(": ", $line); // Getting title, version, ect
-			switch($linesdiff[0]) {
-				case "Name": // if this is the title
-				unset($linesdiff[0]);
-				$name = implode(": ", $linesdiff);
-				unset($lines[$lid]);
-				break;
-				case "Title": // if this is the title
-				unset($linesdiff[0]);
-				$title = implode(": ", $linesdiff);
-				unset($lines[$lid]);
-				break;
-				case "Version": // if this is the version
-				unset($linesdiff[0]);
-				$version = implode(": ", $linesdiff);
-				unset($lines[$lid]);
-				break;
-				case "Download": // if this is the download link
-				unset($linesdiff[0]);
-				$dllink = implode(": ", $linesdiff);
-				unset($lines[$lid]);
-				break;
-				case "Text": // if this is the download link
-				unset($linesdiff[0]);
-				$contents = implode(": ", $linesdiff);
-				$parse = new Parser();
-				$contents = $parse->parse($contents);
-				unset($lines[$lid]);
-				break;
-			}
-		}
+		$title = $cfg->get("Title");
+		$version = $cfg->get("Version");
+		$dllink = $cfg->get("Download");
+		$contents = $cfg->get("Text");
+		$parse = new Parser();
+		$contents = $parse->parse($contents);
 	}
 }
 if(!isset($id)) {

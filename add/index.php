@@ -27,7 +27,7 @@ if(!isset($_POST['AuthorAccName']) or empty($_POST['AuthorAccName'])) {
 		$downloadlink = $_POST['DownloadLink'];
 		$id = 1;
 		while(file_exists("../resources/$id.thread")) {
-			$id++
+			$id++;
 		}
 		file_put_contents("../resources/$id.thread", "Resource $resourcename uploaded by $username". PHP_EOL ."Name: $resourcename". PHP_EOL ."Title: $resourcesdesc". PHP_EOL ."Download: $downloadlink". PHP_EOL ."Id: $id". PHP_EOL ."Text: " . implode("\n", explode(PHP_EOL, $resourcedesc));
 	} else {

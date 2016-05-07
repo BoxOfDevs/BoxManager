@@ -24,6 +24,7 @@
 				<div class="container">
 					<div class="row">
 <?php
+error_reporting(-1);
 if(file_exists("install/index.php")) {
 	echo "<script>location.replace('install/index.php')</script>";
 }

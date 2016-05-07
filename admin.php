@@ -11,7 +11,7 @@ $dirname = $_POST["search"];
 $filename = "/install/" . $dirname . "/";
 
 if (!file_exists($filename)) {
-    echo "WARNING! The install/ directory HAS NOT been deleted! Please delete it!;
+    echo "WARNING! The install/ directory HAS NOT been deleted! Please delete it!";
     exit;
  
     $login_form = <<<EOD

@@ -1,4 +1,12 @@
-<?
+<?php
+error_reporting(-1);
+require_once("./login/membersite_config.php"); // Check config
+
+if(!$fgmembersite->CheckLogin()) // Check login
+{
+	echo "<script>location.replace('login.php');</script>"
+    $fgmembersite->RedirectToURL("login.php"); // If not logged in, redirect.
+}
 $error = "";
 if(!isset($_POST['AuthorAccName']) or empty($_POST['AuthorAccName'])) {
 	$error = "Please enter your username to login to post your resource. If you don't have an account yet, please register using the 'Sign up' button.";

@@ -71,7 +71,7 @@ error_reporting(-1);
 						}
 						break;
 						case "3":
-						if(!isset($_POST['dataadress'])) {
+						if(!isset($_POST['dataaddress'])) {
 							echo "<script>alert('Error, please enter your database address'); location.replace('index.php?step=2');</script>";
 						} elseif(!isset($_POST['dataname'])) {
 							echo "<script>alert('Error, please enter your database name'); location.replace('index.php?step=2');</script>";

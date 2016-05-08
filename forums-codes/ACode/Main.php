@@ -1,7 +1,6 @@
 <?php
-require_once("Codes.php");
 error_reporting(-1);
-class Main extends Codes {
+class Code {
 	public function toHTML($content) {
 		$content = str_replace("\n", "<br />", $content);
 		$content = str_replace("+eol+", "<br />", $content);
@@ -11,7 +10,7 @@ class Main extends Codes {
 		$content = str_replace("-b-", "</b>", $content);
 		$content = str_replace("+u+", "<u>", $content);
 		$content = str_replace("-u-", "</u>", $content);
-		$content = $content . "<script>var Color = document.registerElement('color');document.body.appendChild(new Color());var Font = document.registerElement('a-font');document.body.appendChild(new Font());</script>var Size = document.registerElement('a-size');document.body.appendChild(new Size());</script>"
+		$content =  str_replace($content, $content . "<script>var Color = document.registerElement('color');document.body.appendChild(new Color());var Font = document.registerElement('a-font');document.body.appendChild(new Font());var Size = document.registerElement('a-size');document.body.appendChild(new Size());</script>", $content);
 		$content = str_replace("+c=red+", "<style>a-color{color: red}</style><a-color>", $content);
 		$content = str_replace("+c=blue+", "<style>a-color{color: blue}</style><a-color>", $content);
 		$content = str_replace("+c=yellow+", "<style>a-color{color: yellow}</style><a-color>", $content);
@@ -50,4 +49,5 @@ class Main extends Codes {
 		}
 		return $content;
 	}
+}
 ?>

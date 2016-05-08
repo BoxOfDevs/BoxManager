@@ -49,15 +49,8 @@ error_reporting(-1);
 								}
 							    $id++;
 							}
-<<<<<<< HEAD
 							$databaseadress = $databasename = $databaseadminname = $databaseadminpass = "";
-					echo "<div class='container'  style='display: false'>
-					</div>
-					<div class='container'>
-=======
-							$databaseaddress = $databasename = $databaseadminname = $databaseadminpass = "";
 					echo "<div class='container'>
->>>>>>> origin/master
 					<div class='row'>
 					<section class='special box'>
 					<center><p>MySQL Database</p><center>

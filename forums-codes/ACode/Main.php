@@ -21,11 +21,11 @@ class Code {
 		$content = str_replace("-c-", "</a-color>", $content);
 		$i = explode("+img+", $content);
 		unset($i[0]); // because the first one is the start of the text so not an image
+		$id = 1;
 		foreach($i as $img) {
-			$imgs = explode("-img-", $content);
-			$img = $imgs[0]; // this is the url
-			$content = str_replace("+img+", "<img src='".$img."'>", $content);
-			$content = str_replace("-img-", "</img>", $content);
+			$img = $i[$id]; // this is the url
+			$content = str_replace("+img+".$img."+img+", "<img src='".$img."'></img>", $content);
+			$id++;
 		}
 		$content = str_replace("+font=veranda+", "<style>a-font{font-family: Veranda}</style><a-font style='font-family: Veranda;'>", $content);
 		$content = str_replace("+font=Comic Sans MS+", "<style>a-font{font-family: Comic Sans MS}</style><a-font style='font-family: Comic Sans MS;'>", $content);
@@ -39,14 +39,6 @@ class Code {
 		$content = str_replace("+size=4+", "<size style='font-size: 40;'>", $content);
 		$content = str_replace("+size=5+", "<size style='font-size: 50;'>", $content);
 		$content = str_replace("-size-", "</size>", $content);
-		$u = explode("+url", $content);
-		unset($u[0]); // because the first one is the start of the text so not an url
-		foreach($u as $url) {
-			$urls = explode("+http", $content);
-			$url = $urls[0]; // this is the url
-			$content = str_replace("+url+", "<a href='http".$url."'>", $content);
-			$content = str_replace("-url-", "</a>", $content);
-		}
 		return $content;
 	}
 }

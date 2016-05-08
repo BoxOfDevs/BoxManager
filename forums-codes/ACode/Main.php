@@ -1,6 +1,7 @@
 <?php
+require_once("Codes.php");
 error_reporting(-1);
-class Main {
+class Main extends Codes {
 	public function toHTML($content) {
 		$content = str_replace("\n", "<br />", $content);
 		$content = str_replace("+eol+", "<br />", $content);
@@ -39,6 +40,14 @@ class Main {
 		$content = str_replace("+size=4+", "<size style='font-size: 40;'>", $content);
 		$content = str_replace("+size=5+", "<size style='font-size: 50;'>", $content);
 		$content = str_replace("-size-", "</size>", $content);
+		$u = explode("+url", $content);
+		unset($u[0]); // because the first one is the start of the text so not an url
+		foreach($u as $url) {
+			$urls = explode("+http", $content);
+			$url = $urls[0]; // this is the url
+			$content = str_replace("+url+", "<a href='http".$url."'>", $content);
+			$content = str_replace("-url-", "</a>", $content);
+		}
 		return $content;
 	}
 ?>

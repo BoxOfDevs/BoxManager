@@ -38,7 +38,7 @@ class Main {
 		$content = str_replace("+size=3+", "<size style='font-size: 30;'>", $content);
 		$content = str_replace("+size=4+", "<size style='font-size: 40;'>", $content);
 		$content = str_replace("+size=5+", "<size style='font-size: 50;'>", $content);
-		$content = str_replace("-font-", "</size>", $content);
+		$content = str_replace("-size-", "</size>", $content);
 		return $content;
 	}
 ?>

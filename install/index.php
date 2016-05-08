@@ -49,16 +49,21 @@ error_reporting(-1);
 								}
 							    $id++;
 							}
+<<<<<<< HEAD
 							$databaseadress = $databasename = $databaseadminname = $databaseadminpass = "";
 					echo "<div class='container'  style='display: false'>
 					</div>
 					<div class='container'>
+=======
+							$databaseaddress = $databasename = $databaseadminname = $databaseadminpass = "";
+					echo "<div class='container'>
+>>>>>>> origin/master
 					<div class='row'>
 					<section class='special box'>
 					<center><p>MySQL Database</p><center>
 					<form action='index.php?step=3' method='post' id='install2'>
 					<label for='dataadress'>Where is your database located? *</label>
-					<input type='text' id='dataadress' name='dataadress' value='".$databaseadress."'/>
+					<input type='text' id='dataadress' name='dataaddress' value='".$databaseaddress."'/>
 					<label for='dataname'>What's your database name ? *</label>
 					<input type='text' id='dataname' name='dataname'  value='".$databasename."'/>
 					<label for='dataname'>What's your database admin username ? *</label>
@@ -74,7 +79,7 @@ error_reporting(-1);
 						break;
 						case "3":
 						if(!isset($_POST['dataadress'])) {
-							echo "<script>alert('Error, please enter your database adress'); location.replace('index.php?step=2');</script>";
+							echo "<script>alert('Error, please enter your database address'); location.replace('index.php?step=2');</script>";
 						} elseif(!isset($_POST['dataname'])) {
 							echo "<script>alert('Error, please enter your database name'); location.replace('index.php?step=2');</script>";
 						} elseif(!isset($_POST['dataadminname'])) {
@@ -88,7 +93,7 @@ error_reporting(-1);
 								$part = explode(": ", $line);
 								switch($part[0]) {
 									case "Database address":
-									$config[$id] = "Database adress: ". $_POST['dataadress'];
+									$config[$id] = "Database address: ". $_POST['dataaddress'];
 									break;
 									case "Database name":
 									$config[$id] = "Database name: ". $_POST['dataname'];

@@ -90,5 +90,5 @@ Uses the excellent form validation script from JavaScript-coder.com-->
 <!--
 Form Code End
 -->
-<p><a href="http://boxofdevs.ml>Powered by BoxManager - Copyright © BoxOfDevs Team 2016.</a></p>
+<p><a href="http://boxofdevs.ml">Powered by BoxManager - Copyright © BoxOfDevs Team 2016</a></p>
 </body></html>

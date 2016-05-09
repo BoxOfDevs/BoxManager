@@ -2,7 +2,7 @@
 
 
 <?php
-$lines = file("./HRAT/ateval.txt");
+$lines = file("./HRAT/rateval.txt");
 $count = 0;
 $ratc = 0;
 $fname = $_SERVER['SCRIPT_NAME'];

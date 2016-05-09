@@ -70,6 +70,6 @@ foreach(array_diff(scandir("resources/"), array('..', '.')) as $file) {
 </div>
 </header>
 </section>
-<p><a href="http://boxofdevs.ml>© 2016 BoxManager - BoxOfDevs team.</a></p>
+<p><a href="http://boxofdevs.ml>Powered by BoxManager - Copyright © BoxOfDevs Team 2016.</a></p>
 </body>
 </html>

@@ -15,6 +15,13 @@ if(isset($_POST['submitted']))
 <head>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
     <title>Signup</title>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/skel-layers.min.js"></script>
+<script src="/js/init.js"></script>
+<link rel="stylesheet" href="/css/skel.css" />
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="/css/style-xlarge.css" />
     <link rel="STYLESHEET" type="text/css" href="style/fg_membersite.css" />
     <script type='text/javascript' src='scripts/gen_validatorv31.js'></script>
     <link rel="STYLESHEET" type="text/css" href="style/pwdwidget.css" />
@@ -23,7 +30,6 @@ if(isset($_POST['submitted']))
 <body>
 
 <!-- Form Code Start -->
-<div id='fg_membersite'>
 <form id='register' action='<?php echo $fgmembersite->GetSelfScript(); ?>' method='post' accept-charset='UTF-8'>
 <fieldset >
 <legend>Register</legend>
@@ -36,7 +42,7 @@ if(isset($_POST['submitted']))
 <div><span class='error'><?php echo $fgmembersite->GetErrorMessage(); ?></span></div>
 <div class='container'>
     <label for='name' >Your Full Name*: </label><br/>
-    <input type='text' name='name' id='name' value='<?php echo $fgmembersite->SafeDisplay('name') ?>' maxlength="50" /><br/>
+    <input type='text' name='name' id='name' value='<?php echo $fgmembersite->SafeDisplay('name') ?>' maxlength="50" width="90%" /><br/>
     <span id='register_name_errorloc' class='error'></span>
 </div>
 <div class='container'>
@@ -63,7 +69,6 @@ if(isset($_POST['submitted']))
 </div>
 
 </fieldset>
-</form>
 <!-- client-side Form Validations:
 Uses the excellent form validation script from JavaScript-coder.com-->
 

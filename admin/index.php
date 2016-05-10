@@ -17,4 +17,5 @@ header( 'Content-Type: text/html; charset=utf-8' );
     <p><a href="logout.php">Logout</a></p> <!-- A link for the logout page -->
     <p>ADMIN PAGE CONTENTS HERE</p>
 </body>
+<p><a href="http://boxofdevs.ml>Powered by BoxManager - Copyright © BoxOfDevs Team 2016.</a></p>
 </html>

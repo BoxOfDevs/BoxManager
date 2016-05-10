@@ -63,7 +63,7 @@ if(isset($_POST['submitted']))
 // ]]>
 </script>
 </div>
-
+<p><a href="http://boxofdevs.ml">Powered by BoxManager - Copyright © BoxOfDevs Team 2016</a></p>
 
 </body>
 </html>

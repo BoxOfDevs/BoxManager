@@ -1,19 +1,19 @@
 <?php
 error_reporting(-1);
-require_once("parser.php");
-require_once("config-types/yaml.php");
 if (isset($_GET["thread"])) {
 	$id = htmlspecialchars($_GET["thread"]);
 	
 	if(!file_exists("resources/$id.thread")) {
 	echo "<script>location.replace('index.php');</script>";
 	} else {
+		require_once("config-types/yaml.php");
 		$cfg = new YamlConfig("resources/$id.thread");
 		$name = $cfg->get("Name");
 		$title = $cfg->get("Title");
-		$version = $cfg->get("Version");
-		$dllink = $cfg->get("Download");
+		$version =  = $cfg->get("Version");
+		$dllink =  = $cfg->get("Download");
 		$contents = $cfg->get("Text");
+		require_once("parser.php");
 		$parse = new Parser();
 		$contents = $parse->parse($contents);
 	}

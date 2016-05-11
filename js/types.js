@@ -1,6 +1,8 @@
-var Color = document.registerElement('bod-color');
+{
+var Color = document.registerElement('bm-color');
 document.body.appendChild(new Color());
-var Font = document.registerElement('bod-font');
+var Font = document.registerElement('bm-font');
 document.body.appendChild(new Font());
-var Size = document.registerElement('bod-size');
+var Size = document.registerElement('bm-size');
 document.body.appendChild(new Size());
+}

@@ -1,6 +1,16 @@
 <?php
 error_reporting(-1);
-class Code {
+require_once("../Codes.php");
+class ACode extends Codes {
+	
+	public $opentag = ["+", "+"];
+	public $closetag = ["-", "-"];
+	
+	public function __construct() {
+		parent::__construct("ACode", $this);
+	}
+	
+	
 	public function toHTML($content) {
 		$content = str_replace("\n", "<br />", $content);
 		$content = str_replace("+eol+", "<br />", $content);
@@ -32,11 +42,13 @@ class Code {
 		$content = str_replace("+font=Courrier+", "<bm-font class='Courrier'>", $content);
 		$content = str_replace("+font=Impact+", "<bm-font class='Impact'>", $content);
 		$content = str_replace("-font-", "</bm-font>", $content);
-		$content = str_replace("+size=1+", "<bm-size style='font-size: 10;'>", $content);
-		$content = str_replace("+size=2+", "<bm-size style='font-size: 20;'>", $content);
-		$content = str_replace("+size=3+", "<bm-size style='font-size: 30;'>", $content);
-		$content = str_replace("+size=4+", "<bm-size style='font-size: 40;'>", $content);
-		$content = str_replace("+size=5+", "<bm-size style='font-size: 50;'>", $content);
+		$content = str_replace("+size=1+", "<bm-size class='1'>", $content);
+		$content = str_replace("+size=2+", "<bm-size class='2'>", $content);
+		$content = str_replace("+size=3+", "<bm-size class='3'>", $content);
+		$content = str_replace("+size=4+", "<bm-size class='4'>", $content);
+		$content = str_replace("+size=5+", "<bm-size class='5'>", $content);
+		$content = str_replace("+size=4+", "<bm-size class='6'>", $content);
+		$content = str_replace("+size=5+", "<bm-size class='7'>", $content);
 		$content = str_replace("-size-", "</bm-size>", $content);
 		return $content;
 	}

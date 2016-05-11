@@ -1,13 +1,12 @@
 <?php
 error_reporting(-1);
+require_once("config-types/yaml.php");
+require_once("forumscodes/Codes.php");
+include("forumscodes/Codes.php");
 class Parser {
 public function parse($contents) {
-	foreach(array_diff(scandir("forums-codes"), array('..', '.', 'Codes.php', 'CODES', 'CUSTOM-CODES')) as $dir) {
-	require_once("forums-codes". DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . "Main.php");
-	$code = new Code();
-	$contents = $code->toHTML($contents);
-}
-$ctags = file("forums-codes" . DIRECTORY_SEPARATOR . "CUSTOM-CODES");
+$contents = Codes::toHTML($contents);
+$ctags = explode(PHP_EOL, file_get_contents("forumscodes" . DIRECTORY_SEPARATOR . "CUSTOM-CODES"));
 foreach($ctags as $ctag) {
 	$ctagparts = explode(" = ", $ctag);
 	list($ctagopen, $ctagclose) = explode(" , ", $ctagparts[0]);

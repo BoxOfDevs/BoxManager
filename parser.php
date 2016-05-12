@@ -1,6 +1,5 @@
 <?php
 error_reporting(-1);
-require_once("config-types/yaml.php");
 require_once("forumscodes/Codes.php");
 include("forumscodes/Codes.php");
 class Parser {

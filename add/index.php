@@ -8,7 +8,8 @@ if(!$fgmembersite->CheckLogin()) // Check login
     $fgmembersite->RedirectToURL("login.php"); // If not logged in, redirect.
 }
 $error = "";
-if(!isset($_POST['AuthorAccName']) or empty($_POST['AuthorAccName'])) {
+
+if(!isset($_POST['AuthorAccName']) or empty($_POST['AuthorAccName']) and $_SERVER['GET_METHOD'] === "POST") {
 	$error = "Please enter your username to login to post your resource. If you don't have an account yet, please register using the 'Sign up' button.";
 } elseif(!isset($_POST['AuthorAccPass']) or empty($_POST['AuthorAccPass'])) {
 	$error = "Please enter your password to login.";
@@ -37,7 +38,14 @@ if(!isset($_POST['AuthorAccName']) or empty($_POST['AuthorAccName'])) {
 		while(file_exists("../resources/$id.thread")) {
 			$id++;
 		}
-		file_put_contents("../resources/$id.thread", "Resource $resourcename uploaded by $username". PHP_EOL ."Name: $resourcename". PHP_EOL ."Title: $resourcesdesc". PHP_EOL ."Download: $downloadlink". PHP_EOL ."Id: $id". PHP_EOL ."Text: " . implode("\n", explode(PHP_EOL, $resourcedesc));
+        require_once("../config-types/thread.php");
+		$thread = new ThreadConfig("../resources/$id.thread");
+        $thread->set("Name", $resourcename);
+        $thread->set("Title", $resourcesdesc);
+        $thread->set("Id", $id);
+        $thread->set("Version", $resourcev);
+        $thread->set("Download", $downloadlink);
+        $thread->set("Text", $resourcedesc);
 	} else {
 		$error = "You don't have the permission to upload a resource";
 	}
@@ -58,6 +66,7 @@ if(!isset($_POST['AuthorAccName']) or empty($_POST['AuthorAccName'])) {
 </head>
 <body>
 <?php echo $error ?>
+<form action="index.php">
 <!-- 
 TODO: Create form
 !-->

@@ -28,7 +28,6 @@ if(isset($username, $password)) {
         header("location:login.php?msg=$msg");
     }
     ob_end_flush();
-}
-else {
+} else {
     header("location:login.php?msg=Please enter some username and password");
 }

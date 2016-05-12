@@ -1,5 +1,6 @@
 <?php
 error_reporting(-1);
+require_once("../config-types/S.php");
 ?>
 <html>
 <head>
@@ -23,6 +24,7 @@ error_reporting(-1);
 				<p>We will guide you thougth the steps to setup BoxManager</p>
 				<?php
 				if (isset($_GET["step"])) {
+					$config = new SConfig("../configs/config");
 					switch($_GET["step"]) {
 						case "2":
 						if(!isset($_POST['sitename'])) {
@@ -32,24 +34,11 @@ error_reporting(-1);
 						} elseif(!isset($_POST['adminpass'])) {
 							echo "<script>alert('Error, please enter an admin password'); location.replace('index.php');</script>";
 						} else {
-							$config = explode(PHP_EOL, file_get_contents("../configs/config.yml"));
-							$id = 0;
-							foreach($config as $line) {
-								$part = explode(": ", $line);
-								switch($part[0]) {
-									case "Site name":
-									$config[$id] = "Site name: ".$_POST['sitename'];
-									break;
-									case "Admin username":
-									$config[$id] = "Admin username: ". $_POST['adminname'];
-									break;
-									case "Admin password":
-									$config[$id] = "Site name: ". $_POST['adminpass'];
-									break;
-								}
-							    $id++;
-							}
-							$databaseadress = $databasename = $databaseadminname = $databaseadminpass = "";
+							$config->set("Site name", $_POST['sitename']);
+							$config->set("Admin username", $_POST['adminname']);
+							$config->set("Admin password", $_POST['adminpass']);							
+							$config->save();
+							$databaseaddress = $databasename = $databaseadminname = $databaseadminpass = "";
 					echo "<div class='container'>
 					<div class='row'>
 					<section class='special box'>
@@ -80,26 +69,11 @@ error_reporting(-1);
 						} elseif(!isset($_POST['dataadminpass'])) {
 							echo "<script>alert('Error, please enter your database admin password'); location.replace('index.php?step=2');</script>";
 						} else {
-							$config = explode(PHP_EOL, file_get_contents("../configs/config.yml"));
-							$id = 0;
-							foreach($config as $line) {
-								$part = explode(": ", $line);
-								switch($part[0]) {
-									case "Database address":
-									$config[$id] = "Database address: ". $_POST['dataaddress'];
-									break;
-									case "Database name":
-									$config[$id] = "Database name: ". $_POST['dataname'];
-									break;
-									case "Database admin username":
-									$config[$id] = "Database admin username: ".$_POST['dataadminname'];
-									break;
-									case "Database admin password":
-									$config[$id] = "Database admin password: ".$_POST['dataadminpass'];
-									break;
-								}
-							    $id++;
-							}
+							$config->set("Database address", $_POST['dataaddress']);
+							$config->set("Database name", $_POST['dataname']);
+							$config->set("Database admin username", $_POST['dataadminname']);
+							$config->set("Database admin password", $_POST['dataadminpass']);
+							$config->save();
 						echo "You have succefully setup BoxManager! <a href='delete.php'>Click here</a> to delete the installation files!";
 						}
 					}

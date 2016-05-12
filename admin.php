@@ -15,7 +15,7 @@ if (!file_exists($filename)) {
 }
  
     $login_form = <<<EOD
-<form name="login" id="login" method="POST" action="acplogin/check_login.php">
+<form name="login" id="login" method="POST" action="admin/index.php">
 <p><label for="username">Please Enter Username: </label><input type="text" size="100" name="username" id="username" value="Enter Username here" /></p>
 <p><label for="password">Please Enter Password: </label><input type="password" size="40" name="password" id="password" value="abracadabra" /></p>
 <p><input type="submit" name="submit" id="submit" value="Submit"/> <input type="reset" name="reset" id="reset" value="reset"/></p>
@@ -27,5 +27,5 @@ echo "<h1>Please enter your Login Information</h1>";
 echo $login_form;
 ?>
 </body>
-<p><a href="http://boxofdevs.ml">Powered by BoxManager - Copyright © BoxOfDevs Team 2016</a></p>
+<p><a href="http://boxofdevs.ml>© 2016 BoxManager - BoxOfDevs team.</a></p>
 </html>

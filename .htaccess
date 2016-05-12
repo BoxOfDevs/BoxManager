@@ -1,5 +1,5 @@
 // Stops people from viewing below file, but scripts can.
 
-<files "configs/config.yml"> 
+<files "configs/config"> 
 deny from all 
 </files>

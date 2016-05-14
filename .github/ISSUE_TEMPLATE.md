@@ -18,6 +18,7 @@ This user acknowledges that:
 - [ ] It is a BoxManager problem
 - [ ] The code has not been edited.
 - [ ] The issue contains appropriate markdown (e.g code blocks for code)
+
 <!-- If you have edited the code -->
 <!-- Don't check the box -->
 <!-- Please put your edited file -->

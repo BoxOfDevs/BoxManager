@@ -8,6 +8,8 @@
     "#": "Admited file extensions of resource",
     "Resources exts": ["zip", "jpg", "jpeg", "png"],
 
+    "#": "Can usersnot logined download resources?(true/false)",
+    "Anyone dl": true,
 
     "#": "The admin username and password",
     "Admin username": "",

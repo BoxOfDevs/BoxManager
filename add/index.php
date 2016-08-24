@@ -130,6 +130,7 @@ if(!isset($_POST['ResourceName']) or empty($_POST['ResourceName'])) {
         $resources->Title = $resourcesdesc;
 		$resources->Download = $_FILES['ResourceLink']['name'];
         $resources->Id = $id;
+		$resources->Reviews = [];
         $resources->Version = $resourcev;
         $resources->Text = $resourcedesc;
 		file_put_contents("../resources/$id.json/", json_encode($resources));

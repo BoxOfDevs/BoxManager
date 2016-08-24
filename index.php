@@ -10,12 +10,22 @@
 </head>
 <body>
 <header id="header" class="skel-layers-fixed">
-				<a href="/"><img src="images/logo.png" height="43" width="43"></img></a>
+				<a href="<?php echo json_decode(file_get_contents("configs/config.json"), true)["Site Main"] ?>"><img src="images/logo.png" height="43" width="43"></img><?php echo json_decode(file_get_contents("configs/config.json"))->{"Site Name"}; ?></a>
 				<nav id="nav">
 					<ul>
-						<li><p>Welcome to the resource manager!</p></li>
-						<li><a href="signup/">Sign up</a></li>
-						<li><a href="login/">Login</a></li>
+					<?php
+					if($fgmembersite->CheckLogin()){
+						echo <<<A
+<li><a href="signup/">Sign up</a></li>
+<li><a href="login/">Login</a></li>
+A
+					} else {
+						echo <<<A
+<li>Welcome back, {$fgmembersite->UserFullName()}</li>
+<li><a href="add/">Add resource</a></li>
+A
+					}
+					?>
 					</ul>
 			</nav>
 </header>

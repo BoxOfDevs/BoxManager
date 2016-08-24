@@ -1,5 +1,6 @@
 <?php
 require('comments/Persistence.php');
+require('login/fg_membersite.php');
 $comment_post_ID = 1;
 $db = new Persistence();
 $comments = $db->get_comments($comment_post_ID);
@@ -18,16 +19,7 @@ if (isset($_GET["thread"])) {
 	if(!file_exists("resources/$id.thread")) {
 	echo "<script>location.replace('index.php');</script>";
 	} else {
-		require_once("config-types/yaml.php");
-		$cfg = new YamlConfig("resources/$id.thread");
-		$name = $cfg->get("Name");
-		$title = $cfg->get("Title");
-		$version =  = $cfg->get("Version");
-		$dllink =  = $cfg->get("Download");
-		$contents = $cfg->get("Text");
-		require_once("parser.php");
-		$parse = new Parser();
-		$contents = $parse->parse($contents);
+		
 	}
 }
 if(!isset($id)) {
@@ -36,7 +28,7 @@ if(!isset($id)) {
 ?>
 <html>
 <head>
-<title><?php echo $name . " version " . $version ?></title>
+<title><?php echo $infos->Name . " version " . $infos->Version ?></title>
 <link rel="stylesheet" href="/css/skel.css" />
 <link rel="stylesheet" href="/css/style.css" />
 <link rel="stylesheet" href="/css/style-xlarge.css" />
@@ -47,22 +39,51 @@ if(!isset($id)) {
 </head>
 <body>
 <header id="header" class="skel-layers-fixed">
-				<a href="/"><img src="images/logo.png" height="43" width="43"></img></a>
+				<a href="<?php echo json_decode(file_get_contents("configs/config.json"), true)["Site Main"] ?>"><img src="images/logo.png" height="43" width="43"></img><?php echo json_decode(file_get_contents("configs/config.json"))->{"Site Name"}; ?></a>
 				<nav id="nav">
 					<ul>
-						<li><a href="signup/">Sign up</a></li>
-						<li><a href="login/">Login</a></li>
+					<?php
+					if($fgmembersite->CheckLogin()){
+						echo <<<A
+<li><a href="signup/">Sign up</a></li>
+<li><a href="login/">Login</a></li>
+A
+					} else {
+						echo <<<A
+<li>Welcome back, {$fgmembersite->UserFullName()}</li>
+<li><a href="add/">Add resource</a></li>
+A
+					}
+					?>
 					</ul>
 			</nav>
 </header>
 
 <section id="one" class="wrapper style1">
-<center><img src='images/<? echo $name ?>.png'></img><h3>Resource <?php echo $name . " version " . $version ?></h3></center><center><a class="button big special" href="<? echo $dllink?>">Download resource</a></center>
+<center><img src='images/<? echo $infos->Name ?>.png'></img><h3>Resource <?php echo $infos->Name . " version " . $infos->Version ?></h3></center><center><a class="button big special" href="<? if(json_decode(file_get_contents("configs/config.json"), true)["Anyone dl"] and !$fgmembersite->CheckLogin()) { echo "login/login.php?msg=You must be logged to do this action."} else { echo $infos->Download } ?>">Download resource</a></center>
 				<header class="major">
 				 <div class="container">
 					 <section class="special box">
-					 <?php echo $contents ?>
-					 <?php include 'ratings/hrat.php'?>
+					 <?php requires("Codes/Codes.php");echo (new Codes())->toHTML($infos->Text); ?>
+					 </section>
+				</div>
+			</header>
+				 <div class="container">
+					 <section class="special box">
+					 <h2>Ratings</h2><hr/>
+					 <?php 
+					 foreach($infos->Ratings as $p => $rate) {
+						 $r = "";
+						 for($i = 1; $i <= $rate[0]; $i++) {
+							 $r .= "★";
+						 }
+						 for($i = 5; $i > $rate[0]; $i--) {
+							 $r .= "☆";
+						 }
+						 echo "<h2>" . $p . ": " . $r . "</h2><br><h3>" . $rate[1] . "</h3><hr>";
+						 
+					 }; 
+					 ?>
 					 </section>
 				</div>
 			</header>
@@ -76,7 +97,7 @@ if(!isset($id)) {
     <ol id="posts-list" class="hfeed<?php echo($has_comments?' has-comments':''); ?>">
       <li class="no-comments">Be the first to add a comment.</li>
       <?php
-        foreach ($comments as &$comment) {
+        foreach ($comments as $comment) {}
           ?>
           <li><article id="comment_<?php echo($comment['id']); ?>" class="hentry">	
     				<footer class="post-info">
@@ -123,5 +144,5 @@ if(!isset($id)) {
 	</section>
 	
 </body>
-<p><a href="http://boxofdevs.ml">© 2016 BoxManager - BoxOfDevs team.</a></p>
+<p><a href="http://boxofdevs.com">© 2016 BoxManager - BoxOfDevs team.</a></p>
 </html>

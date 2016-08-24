@@ -69,14 +69,21 @@ function is_valid_file($id) {
 return true
 }
 require_once("./login/membersite_config.php"); // Check config
-
+if(!isset($_POST['ResourceName']))
+$resources->Name = $resourcename;
+$resources->Title = $resourcesdesc;
+		$resources->Download = $_FILES['ResourceLink']['name'];
+        $resources->Id = $id;
+		$resources->Reviews = [];
+        $resources->Version = $resourcev;
+        $resources->Text = $resourcedesc;
 if(!$fgmembersite->CheckLogin()) // Check login
 {
 	echo "<script>alert('You're not logged in ! PLease login before adding anything.');location.replace('login.php');</script>";
 	exit();
 }
 $error = "";
-
+if($_SERVER["REQUEST_METHOD"] == "POST") {
 if(!isset($_POST['ResourceName']) or empty($_POST['ResourceName'])) {
 	$error = "Please enter your resource name.";
 	exit();
@@ -93,7 +100,7 @@ if(!isset($_POST['ResourceName']) or empty($_POST['ResourceName'])) {
 	$error = "Invalid download link !";
 } elseif(!isset($FILES['ResourceImage']) or !is_valid_file($FILES['ResourceImage'])) {
 	$error = "Invalid image.";
-} elseif($_SERVER["REQUEST_METHOD"] == "POST") {
+} else {
 	if($fgmembersite->CheckLogin()) {
 		$resourcename =$_POST['ResourceName'];
 		$resourcesdesc = $_POST['ResourceSDesc'];
@@ -118,6 +125,7 @@ if(!isset($_POST['ResourceName']) or empty($_POST['ResourceName'])) {
 		}
 		rename("../downloads/" . $_FILES['ResourceLink']['tmp_name'], "../downloads/" . $_FILES['ResourceLink']['name']);
 		$resourcedesc = $_POST['ResourceDesc'];
+		$cat = $_POST['Category'];
 
 		$id = 1;
 		while(file_exists("../resources/$id.json/")) {
@@ -133,11 +141,13 @@ if(!isset($_POST['ResourceName']) or empty($_POST['ResourceName'])) {
 		$resources->Reviews = [];
         $resources->Version = $resourcev;
         $resources->Text = $resourcedesc;
+		$resource->Category = $cat;
 		file_put_contents("../resources/$id.json/", json_encode($resources));
 		echo "<script>alert('Resource ".$resourcename." has been succefully uploaded.');</script>";
 	} else {
 		$error = "Please login to upload a resource";
 	}
+}
 }
 ?>
 <html>
@@ -157,14 +167,20 @@ if(!isset($_POST['ResourceName']) or empty($_POST['ResourceName'])) {
 <center>
 <h1>Add resource <span id="name">New resource</span></h1>
 <h3><?php echo $error ?></h3>
-<form enctype="multipart/form-data" action="index.php" method="post">
+<form enctype="multipart/form-data" action="index.php" method="post" id="addResource">
+<select name="Category" form="addResource">
+<?php
+foreach(json_decode(file_get_contents("../configs/config.json"), true)["Category"] as $c) {
+	echo "<option value='$c'>$c</option>";
+}
+?>
+</select>
 <input type="text" name="ResourceName" id="ResourceName" required class="text-first" onKeyUP="if(this.value != '') {document.getElementById('name').innerHTML = this.value;}else{document.getElementById('name').innerHTML = 'New resource';}" placeholder="Resource name" />
 <input type="text" name="ResourceVersion" id="ResourceVersion" required class="text-finish" placeholder="Resource version" />
 <input type="text" name="ResourceSDesc" id="ResourceSDesc" required class="text-line" placeholder="Resource label (small description of the resource which is featured)" />
 <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
 <input type="file" name="ResourceLink" required id="ResourceLink" />
 <input type="text" name="ResourceDesc" required id="ResourceDesc" class="text-description" placeholder="Resource descrpition... Feel free to use all the codes supported by the forums." />
-<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
 <input type="image" name="ResourceImage" required id="ResourceImage" />
 <input type="submit" value="Add resource" />
 </form>

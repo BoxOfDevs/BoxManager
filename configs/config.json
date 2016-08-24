@@ -8,6 +8,9 @@
     "#": "Admited file extensions of resource",
     "Resources exts": ["zip", "jpg", "jpeg", "png"],
 
+    "#": "Here are the categories.",
+    "Categories": { "1": "Example category (default)" },
+
     "#": "Can usersnot logined download resources?(true/false)",
     "Anyone dl": true,
 

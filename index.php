@@ -40,8 +40,6 @@ foreach(array_diff(scandir("resources/"), array('..', '.')) as $file) {
 <br />
 <p>{$infos->Title}</p>
 </a></section></div>";
-A
-}
 ?>
 </div>
 </div>

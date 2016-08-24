@@ -5,6 +5,10 @@
     "#": "This is where does the person go when clicking on the logo",
     "Site root": "/",
 
+    "#": "Admited file extensions of resource",
+    "Resources exts": ["zip", "jpg", "jpeg", "png"],
+
+
     "#": "The admin username and password",
     "Admin username": "",
     "Admin password": "",

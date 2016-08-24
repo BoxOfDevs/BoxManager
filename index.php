@@ -31,7 +31,16 @@ if(file_exists("install/index.php")) {
 foreach(array_diff(scandir("resources/"), array('..', '.')) as $file) {
 	$contents = file_get_contents("resources". DIRECTORY_SEPARATOR . $file);
 	$infos = json_decode($contents);
-	echo "<div class='4u'><section class='special box'><a href='reader.php?thread={$infos->Id}'><img src='images/{$infos->Name}.png'></img><h3>{$infos->Name}</h3><br /><p>{$infos->Title}</p></a></section></div>";
+	echo <<<A
+<div class='4u'>
+<section class='special box'>
+<a href='reader.php?thread={$infos->Id}'>
+<img src='images/{$infos->Name}.png'></img>
+<h3>{$infos->Name}</h3>
+<br />
+<p>{$infos->Title}</p>
+</a></section></div>";
+A
 }
 ?>
 </div>

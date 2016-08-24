@@ -1,6 +1,10 @@
 <?php
 error_reporting(-1);
 abstract class Codes {
+
+	public function __construct() {
+		$this->addCode("BBCode", new BBCodes());
+	}
 	
 	public function addCode($codename, Codes $code) {
 		$this->codes[$codename] = $code;
@@ -12,7 +16,7 @@ abstract class Codes {
 
 	public function toHTML($contents) {
 		foreach($this->codes as $code) {
-			$contents = $code->toHTML($contents);
+			$contents = $code->parse($contents);
 		}
 		return $contents;
 	}

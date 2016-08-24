@@ -81,9 +81,18 @@ A
 							 $r .= "☆";
 						 }
 						 echo "<h2>" . $p . ": " . $r . "</h2><br><h3>" . $rate[1] . "</h3><hr>";
-						 
 					 }; 
 					 ?>
+					 </section>
+					 <section class="special box">
+					 <h2>Leave a review !</h2><hr/>
+					 <?php if($fgmembersite->CheckLogin()) {
+						 echo <<<A
+<input type='text' id='review' placeholder='Enter a review' size=40 maxlenght=140 onKeyUP='document.getElementById(\"charleft\").innerHTML=140 - document.getElementById(\"review\").value.length;'></input><p><span id='Star1' onclick='stars = 1;s1.innerHTML=\"★\";s2.innerHTML=\"☆\";s3.innerHTML=\"☆\";s4.innerHTML=\"☆\";s5.innerHTML=\"☆\";'>★</span><span id='Star2' onclick='stars = 2;s1.innerHTML=\"★\";s2.innerHTML=\"★\";s3.innerHTML=\"☆\";s4.innerHTML=\"☆\";s5.innerHTML=\"☆\";'>★</span><span id='Star3' onclick='stars = 3; s1.innerHTML=\"★\";s2.innerHTML=\"★\";s3.innerHTML=\"★\";s4.innerHTML=\"☆\";s5.innerHTML=\"☆\";'>★</span><span id='Star4' onclick='stars = 4;s1.innerHTML=\"★\";s2.innerHTML=\"★\";s3.innerHTML=\"★\";s4.innerHTML=\"★\";s5.innerHTML=\"☆\";'>☆</span><span id='Star5' onclick='stars = 5;s1.innerHTML=\"★\";s2.innerHTML=\"★\";s3.innerHTML=\"★\";s4.innerHTML=\"★\";s5.innerHTML=\"★\";'>☆</span><p id='charleft' style='color: green;'>140</p><button class='download' onclick='location=\"review.php?r=\" + document.getElementById(\"review\").value + \"&id=<?php echo $id; ?>&s=\" + stars'><br>Submit</button></h3><script>s1 = document.getElementById('Star1');s2 = document.getElementById('Star2');s3 = document.getElementById('Star3');s4 = document.getElementById('Star4');s5 = document.getElementById('Star5');</script>
+A;
+					 } else {
+						 echo "<a href='login.php'><button>Login to review !</button></a>";
+					 }
 					 </section>
 				</div>
 			</header>

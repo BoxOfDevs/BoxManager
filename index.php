@@ -49,7 +49,8 @@ foreach(array_diff(scandir("resources/"), array('..', '.')) as $file) {
 <h3>{$infos->Name}</h3>
 <br />
 <p>{$infos->Title}</p>
-</a></section></div>";
+</a></section></div>"
+A;
 ?>
 </div>
 </div>

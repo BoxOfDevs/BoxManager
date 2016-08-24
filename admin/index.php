@@ -1,11 +1,13 @@
 <?php
-session_start(); //Start the session
-define(ADMIN,$_SESSION['name']); //Get the user name from the previously registered super global variable
-if(!session_is_registered("admin")){ //If session not registered
+error_reporting(-1);
+if($_SERVER['GET_METHOD'] = 'POST') {
+    session_start(); //Start the session
+    define(ADMIN,$_SESSION['admin']); //Get the user name from the previously registered super global variable
+}
+if(isset($_POST['username']) or isset($_POST['password']) or isset($_SESSION['admin'])){ //If session not registered
+} else {
 header("location:login.php"); // Redirect to login.php page
 }
-else //Continue to current page
-header( 'Content-Type: text/html; charset=utf-8' );
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">

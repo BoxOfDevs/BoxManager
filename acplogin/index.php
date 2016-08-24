@@ -37,7 +37,7 @@ if(isset($username, $password)) {
 </head>
 <body>
 <header id="header" class="skel-layers-fixed">
-				<nav id="nav" align="left">
+				<nav id="nav" align="center">
            <ul>
 		      <li><img src="images/logo.png" height="43" width="43"></img></li>
 				<li><p>Admin CPanel</p></li>

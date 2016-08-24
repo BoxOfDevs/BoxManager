@@ -1,0 +1,30 @@
+input.text-description {
+    border: 2px solid #Ad5001;
+    /* My favorite hexe color :P*/
+    width: 90%;
+    height: 10;
+}
+
+input.text-line {
+    border: none;
+    border-bottom: 2px solid #Ad5001;
+    width: 90%;
+}
+
+input.text-small {
+    border-bottom: 2px solid #Ad5001;
+    width: 5%;
+}
+
+input.text-first {
+    border: none;
+    border-bottom: 2px solid #Ad5001;
+    width: 90%;
+    float: left;
+}
+
+input.text-finish {
+    border-bottom: 2px solid #Ad5001;
+    width: 5%;
+    float: right;
+}

@@ -4,16 +4,11 @@ require_once("./login/membersite_config.php"); // Check config
 
 if(!$fgmembersite->CheckLogin()) // Check login
 {
-	echo "<script>location.replace('login.php');</script>";
-    $fgmembersite->RedirectToURL("login.php"); // If not logged in, redirect.
+	echo "<script>alert('You're not logged in ! PLease login before adding anything.');location.replace('login.php');</script>";
 }
 $error = "";
 
-if(!isset($_POST['AuthorAccName']) or empty($_POST['AuthorAccName']) and $_SERVER['GET_METHOD'] === "POST") {
-	$error = "Please enter your username to login to post your resource. If you don't have an account yet, please register using the 'Sign up' button.";
-} elseif(!isset($_POST['AuthorAccPass']) or empty($_POST['AuthorAccPass'])) {
-	$error = "Please enter your password to login.";
-} elseif(!isset($_POST['ResourceName']) or empty($_POST['ResourceName'])) {
+if(!isset($_POST['ResourceName']) or empty($_POST['ResourceName'])) {
 	$error = "Please enter your resource name.";
 } elseif(!isset($_POST['ResourceSDesc']) or empty($_POST['ResourceSDesc'])) {
 	$error = "Please enter your resource small description. It will be show under your resource name on the pages.";
@@ -22,7 +17,7 @@ if(!isset($_POST['AuthorAccName']) or empty($_POST['AuthorAccName']) and $_SERVE
 } elseif(!isset($_POST['ResourceDesc']) or empty($_POST['ResourceDesc'])) {
 	$error = "Please enter your resource description.";
 } elseif(!isset($_POST['DownloadLink']) or empty($_POST['DownloadLink'])) {
-	$error = "Please enter a resource link to download."; // someone knows how to make uploaded files?
+	$error = "Please enter a resource link to download.";
 	// Use: <input type=file id=’file’ "/>
 } elseif($_SERVER["REQUEST_METHOD"] == "POST") {
 	$username = $_POST['AuthorAccName'];
@@ -35,17 +30,18 @@ if(!isset($_POST['AuthorAccName']) or empty($_POST['AuthorAccName']) and $_SERVE
 		$resourcedesc = $_POST['ResourceDesc'];
 		$downloadlink = $_POST['DownloadLink'];
 		$id = 1;
-		while(file_exists("../resources/$id.thread")) {
+		while(file_exists("../resources/$id.json/")) {
 			$id++;
 		}
-        require_once("../config-types/thread.php");
-		$thread = new ThreadConfig("../resources/$id.thread");
-        $thread->set("Name", $resourcename);
-        $thread->set("Title", $resourcesdesc);
-        $thread->set("Id", $id);
-        $thread->set("Version", $resourcev);
-        $thread->set("Download", $downloadlink);
-        $thread->set("Text", $resourcedesc);
+		$resources = new stdClass();// Don't mind me, wanted to use it !
+        $resources->Name = $resourcename;
+        $resources->Title = $resourcesdesc;
+        $resources->Id = $id;
+        $resources->Version = $resourcev;
+        $resources->Download = $downloadlink;
+        $resources->Text = $resourcedesc;
+		file_put_contents("../resources/$id.json/", json_encode($resources));
+		echo "<script>alert('Resource ".$resourcename." has been succefully uploaded.');</script>";
 	} else {
 		$error = "You don't have the permission to upload a resource";
 	}
@@ -55,20 +51,28 @@ if(!isset($_POST['AuthorAccName']) or empty($_POST['AuthorAccName']) and $_SERVE
 <head>
 <title>Upload a resource</title>
 
-<!-- These don't exist! Remove this comment when you do something about it. -->
-<link rel="stylesheet" href="/css/skel.css" />
-<link rel="stylesheet" href="/css/style.css" />
-<link rel="stylesheet" href="/css/style-xlarge.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/skel.min.js"></script>
-<script src="/js/skel-layers.min.js"></script>
-<script src="/js/init.js"></script>
+<link rel="stylesheet" href="../css/skel.css" />
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/style-xlarge.css" />
+<link rel="stylesheet" href="../css/forms.css" />
+<script src="../js/jquery.min.js"></script>
+<script src="../js/skel.min.js"></script>
+<script src="../js/skel-layers.min.js"></script>
+<script src="../js/init.js"></script>
 </head>
 <body>
-<?php echo $error ?>
-<form action="index.php">
-<!-- 
-TODO: Create form
-!-->
+<center>
+<h1>Add resource <span id="name">New resource</span></h1>
+<h3><?php echo $error ?></h3>
+<form enctype="multipart/form-data" action="index.php" method="post">
+<input type="text" name="ResourceName" id="ResourceName" class="text-line" onKeyUP="if(this.value != '') {document.getElementById('name').innerHTML = this.value;}else{document.getElementById('name').innerHTML = 'New resource';}" placeholder="Resource name" />
+<input type="text" name="ResourceVersion" id="ResourceVersion" placeholder="Resource version" />
+<input type="text" name="ResourceSDesc" id="ResourceSDesc" class placeholder="Resource label (small description of the resource which is featured)" />
+<input type="text" name="ResourceLink" id="ResourceLink" placeholder="Resource name" />
+<input type="text" name="ResourceDesc" id="ResourceDesc" placeholder="Resource descrpition... Feel free to use all the codes supported by the forums" />
+<input type="text" name="ResourceName" id="ResourceName" placeholder="Resource name" />
+
+</form>
+
 
 </body>

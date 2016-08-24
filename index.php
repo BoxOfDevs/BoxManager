@@ -30,46 +30,14 @@ if(file_exists("install/index.php")) {
 }
 foreach(array_diff(scandir("resources/"), array('..', '.')) as $file) {
 	$contents = file_get_contents("resources". DIRECTORY_SEPARATOR . $file);
-	$lines = explode(PHP_EOL, $contents);
-	$lid = 1;
-	foreach($lines as $line) {
-			$linediff = explode(": ", $line); // Getting title, version, ect
-			switch($linediff[0]) {
-				case "Name": // if this is the title
-				unset($linediff[0]);
-				$names = $linediff[1];
-				unset($line);
-				break;
-				case "Title": // if this is the title
-				unset($linediff[0]);
-				$titles = $linediff[1];
-				unset($line);
-				break;
-				case "Version": // if this is the version
-				unset($linediff[0]);
-				$versions = $linediff[1];
-				unset($line);
-				break;
-				case "Download": // if this is the download link
-				unset($linediff[0]);
-				$downloadlinks = $linediff[1];
-				unset($line);
-				break;
-				case "Id": // if this is the id
-				unset($linediff[0]);
-				$ids = $linediff[1];
-				unset($line);
-				break;
-			}
-		$lid++;
-		}
-		    echo "<div class='4u'><section class='special box'><a href='reader.php?thread=$ids'><img src='images/$names.png'></img><h3>$names</h3><br /><p>$titles</p></a></section></div>";
+	$infos = json_decode($contents);
+	echo "<div class='4u'><section class='special box'><a href='reader.php?thread={$infos->Id}'><img src='images/{$infos->Name}.png'></img><h3>{$infos->Name}</h3><br /><p>{$infos->Title}</p></a></section></div>";
 }
 ?>
 </div>
 </div>
 </header>
 </section>
-<p><a href="http://boxofdevs.ml">Powered by BoxManager - Copyright © BoxOfDevs Team 2016</a></p>
+<p><a href="http://boxofdevs.com">Powered by BoxManager - Copyright © BoxOfDevs Team 2016</a></p>
 </body>
 </html>

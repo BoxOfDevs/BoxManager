@@ -20,8 +20,8 @@ class FGMembersite
     //-----Initialization -------
     function FGMembersite()
     {
-        $this->sitename = 'YourWebsiteName.com';
-        $this->rand_key = '0iQx5oBk66oVZep';
+        $this->sitename = json_decode("../configs/config.json", true)["Site Name"];
+        $this->rand_key = "AiszzfÛSsucmck:shjvkc"; 
     }
     
     function InitDB($host,$uname,$pwd,$database,$tablename)

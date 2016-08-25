@@ -69,10 +69,10 @@ require_once("../config-types/S.php");
 						} elseif(!isset($_POST['dataadminpass'])) {
 							echo "<script>alert('Error, please enter your database admin password'); location.replace('index.php?step=2');</script>";
 						} else {
-							$config->{"Database address" = $_POST['dataaddress'];
-							$config->{"Database name" = $_POST['dataname'];
-							$config->{"Database admin username" = $_POST['dataadminname'];
-							$config->{"Database admin password" = $_POST['dataadminpass'];
+							$config->{"Database address"} = $_POST['dataaddress'];
+							$config->{"Database name"} = $_POST['dataname'];
+							$config->{"Database admin username"} = $_POST['dataadminname'];
+							$config->{"Database admin password"} = $_POST['dataadminpass'];
 							file_put_contents("../configs/config.json", json_encode($config));
 						echo "You have succefully setup BoxManager! <a href='delete.php'>Click here</a> to delete the installation files!";
 						}

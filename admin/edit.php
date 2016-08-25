@@ -8,8 +8,14 @@ if(isset($_POST['username']) or isset($_POST['password']) or isset($_SESSION['ad
 } else {
     header("location:login.php"); // Redirect to login.php page
 }
-if(!isset($_GET["s"])) {
-    $_GET["s"] = "index";
+if(!isset($_GET["id"])) {
+    header("location: index.php?s=resources");
+}
+if(isset($_GET["save"])) {
+    $json = json_decode(file_get_contents("resources/$_GET['id'].json"));
+    $json->Text = htmlspecialchars_decode($_GET["save"]);
+    file_put_contents("resources/$_GET['id'].json", json_encode($json));
+    echo "<script>alert('Saved !');</script>";
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -34,31 +40,9 @@ if(!isset($_GET["s"])) {
            </ul>
 			</nav>
 </header>
-<ul>
-<?php
-switch($_GET["s"]) {
-case "index":
-echo <<<A
-<li><a href='index.php?s=users'><p>Manage users<p></a></li>
-<li><a href='index.php?s=resources'><p>Manage resources<p></a></li>
-<li><a href='index.php?s=mods'><p>Manage resource approvers<p></a></li>
-<li></li>
-<li></li>
-A;
-break;
-case "users":
-// @UltimateMCraft May you do this?
-break;
-case "resources":
-echo "<li><a href='index.php?s=index'><p>Back to index<p></a></li>";
-foreach(array_diff(scandir("../resources"), [".", ".."]) as $res) {
-    $infos = json_decode(file_get_contents("../resources/$res"));
-    $id = str_ireplace(".json", "", $res);
-    echo "<li><p>{$infos->Name}<p><a href='../reader.php?thread=$id'><button class='alt'>View</button></a><a href='index.php?s=resources&deleteRes=$id'><button class='alt'>Delete</button></a><a href='edit.php?id=$id'><button class='alt'>Edit</button></a></li>"
-}
-break;
-}
-</ul>
+<table>
+<tr><td><button class="alt" onClick="document.getElementById('save').src = 'edit.php?id=<? echo $_GET['id']; ?>&save=' + document.getElementById('desc').value;">Save</button><td><td><button class="alt">Cancel</button></td></tr>
+</table>
+<input style="width: 100%; height: 100%;" type="text" id="desc" value="<?php echo json_decode(file_get_contents("resources/$_GET['id'].json"))->Text; ?>" />
+<iframe id="save" src="" style='width: 0%; height: 0%;' frameborder=0></iframe>
 </body>
-<p><a href="http://boxofdevs.com">Powered by BoxManager - Copyright © BoxOfDevs Team 2016.</a></p>
-</html>

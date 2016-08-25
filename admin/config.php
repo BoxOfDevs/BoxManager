@@ -6,10 +6,10 @@
  *dbPass = Password of your DataBase
  *dbName = Name of your DataBase
  **********************************************************************/
-$dbHost = 'localhost';
-$dbUser = 'Data Base User Name';
-$dbPass = 'Data Base Password';
-$dbName = 'Data Base Name';
+$dbHost = json_decode(file_get_contents("../configs/config.json"), true)["Database address"];
+$dbUser = json_decode(file_get_contents("../configs/config.json"), true)["Database admin username"];
+$dbPass = json_decode(file_get_contents("../configs/config.json"), true)["Database admin password"];
+$dbName = json_decode(file_get_contents("../configs/config.json"), true)["Database name"];
 $dbC = mysqli_connect($dbHost, $dbUser, $dbPass, $dbName)
         or die('Error Connecting to MySQL DataBase');
 ?>

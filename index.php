@@ -1,4 +1,8 @@
-<html><head><title>BoxManager</title>
+<?php
+if(file_exists("install/index.php")) {
+	echo "<script>location.replace('install/index.php')</script>";
+}
+?><html><head><title>BoxManager</title>
 <link rel="icon" href="favicon.png" />
 <script src="/js/jquery.min.js"></script>
 <script src="/js/skel.min.js"></script>
@@ -18,12 +22,12 @@
 						echo <<<A
 <li><a href="signup/">Sign up</a></li>
 <li><a href="login/">Login</a></li>
-A
+A;
 					} else {
 						echo <<<A
 <li>Welcome back, {$fgmembersite->UserFullName()}</li>
 <li><a href="add/">Add resource</a></li>
-A
+A;
 					}
 					?>
 					</ul>
@@ -36,9 +40,6 @@ A
 <?php
 $c = 0;
 error_reporting(-1);
-if(file_exists("install/index.php")) {
-	echo "<script>location.replace('install/index.php')</script>";
-}
 foreach(array_diff(scandir("resources/"), array('..', '.')) as $file) {
 	if(!isset($_GET["category"])) {
 		$contents = file_get_contents("resources". DIRECTORY_SEPARATOR . $file);
@@ -68,7 +69,7 @@ A;
 	} else {
 		$contents = file_get_contents("resources". DIRECTORY_SEPARATOR . $file);
 		$infos = json_decode($contents);
-		$cs = []
+		$cs = [];
 		foreach(json_decode(file_get_contents("configs.config.json"))["Categories"] as $c){
 			if(!isset($cs[$c])) {
 				$cs[$c] = 0;

@@ -11,7 +11,7 @@ abstract class Codes {
 	}
 
 
-	public function parse(string $str);
+	abstract function parse(string $str);
 
 
 	public function toHTML($contents) {

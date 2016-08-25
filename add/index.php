@@ -66,7 +66,7 @@ function is_valid_file($id) {
 	return false;
 
 }
-return true
+return true;
 }
 require_once("./login/membersite_config.php"); // Check config
 if(!isset($_POST['ResourceName']))
@@ -105,11 +105,11 @@ if(!isset($_POST['ResourceName']) or empty($_POST['ResourceName'])) {
 		$resourcename =$_POST['ResourceName'];
 		$resourcesdesc = $_POST['ResourceSDesc'];
 		$resourcev = $_POST['ResourceVersion'];
-		if(!in_array(explode(".", $_FILES['ResourceLink']['name'])[1]), json_decode(file_get_contents("../configs/config.json")["Resources exts"], true)) {
-			$error = "Resource File format not acepeted ! Current accepted formats: ". implode(", ", json_decode(file_get_contents("../configs/config.json")["Resources exts"]);
+		if(!in_array(explode(".", $_FILES['ResourceLink']['name'])[1], json_decode(file_get_contents("../configs/config.json")["Resources exts"], true))) {
+			$error = "Resource File format not acepeted ! Current accepted formats: ". implode(", ", json_decode(file_get_contents("../configs/config.json"))["Resources exts"]);
 			exit();
 		}
-		if(!in_array(explode(".", $_FILES['ResourceImage']['name'])[1]), ["jpg", "jpe", "jpeg", "png", "gif", "tiff"], true)) {
+		if(!in_array(explode(".", $_FILES['ResourceImage']['name'])[1], ["jpg", "jpe", "jpeg", "png", "gif", "tiff"])) {
 			$error = "Icon File format not acepeted ! Current accepted formats: jpg, jpe, jpeg, png, gif, tiff";
 			exit();
 		}

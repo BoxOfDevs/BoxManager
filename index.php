@@ -1,7 +1,9 @@
 <?php
 if(file_exists("install/index.php")) {
-	echo "<script>location.replace('install/index.php')</script>";
+	echo "<script>location.replace('install');</script>";
+	exit();
 }
+require_once("login/fgmembersite.php");
 ?><html><head><title>BoxManager</title>
 <link rel="icon" href="favicon.png" />
 <script src="/js/jquery.min.js"></script>

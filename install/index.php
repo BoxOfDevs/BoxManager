@@ -1,18 +1,17 @@
 <?php
 error_reporting(-1);
-require_once("../config-types/S.php");
 ?>
 <html>
 <head>
 <title>Installation of BoxManager</title>
-<link rel="icon" href="favicon.png" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/skel.min.js"></script>
-<script src="/js/skel-layers.min.js"></script>
-<script src="/js/init.js"></script>
-<link rel="stylesheet" href="/css/skel.css" />
-<link rel="stylesheet" href="/css/style.css" />
-<link rel="stylesheet" href="/css/style-xlarge.css" />
+<link rel="icon" href="../favicon.png" />
+<script src="../js/jquery.min.js"></script>
+<script src="../js/skel.min.js"></script>
+<script src="../js/skel-layers.min.js"></script>
+<script src="../js/init.js"></script>
+<link rel="stylesheet" href="../css/skel.css" />
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/style-xlarge.css" />
 </head>
 <body>
 <header id="header" class="skel-layers-fixed">
@@ -41,6 +40,10 @@ require_once("../config-types/S.php");
 							$databaseaddress = $databasename = $databaseadminname = $databaseadminpass = "";
 					echo "<div class='container'>
 					<div class='row'>
+					<div class='4u'>
+					<p> </p>
+					</div>
+					<div class='4u'>
 					<section class='special box'>
 					<center><p>MySQL Database</p><center>
 					<form action='index.php?step=3' method='post' id='install2'>
@@ -55,6 +58,7 @@ require_once("../config-types/S.php");
 					<input type='submit' id='submit' value='Submit' name='submit' />
 					</form>
 					</section>
+					</div>
 					</div>
 					</div>";
 						}
@@ -83,6 +87,10 @@ require_once("../config-types/S.php");
 					</div>
 					<div class='container'>
 					<div class='row'>
+					<div class='4u'>
+					<p> </p>
+					</div>
+					<div class='4u'>
 					<section class='special box'>
 					<center><p>You will need to complete all the forms that will shown 1 by 1 about your website.</p></center>
 					<form action='index.php?step=2' method='post' id='install1'>
@@ -90,11 +98,12 @@ require_once("../config-types/S.php");
 					<input type='text' id='sitename' name='sitename' value='".$sitename."'/>
 					<label for='adminname'>What's your username (will be used for administrator account)? *</label>
 					<input type='text' id='adminname' name='adminname'  value='".$adminname ."'/>
-					<label for='adminpass'>What's your database admin password?* (will be used for administrator account) *</label>
+					<label for='adminpass'>What's your admin password?* (will be used for administrator account) *</label>
 					<input type='password' id='adminpass' name='adminpass'  value='".$adminpass."'/>
 					<input type='submit' id='submit' value='Submit' name='submit' />
 					</form>
 					</section>
+					</div>
 					</div>
 					</div>";
 				}

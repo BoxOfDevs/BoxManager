@@ -63,7 +63,7 @@ A
 </header>
 
 <section id="one" class="wrapper style1">
-<center><img src='images/<? echo $infos->Name ?>.png'></img><h3>Resource <?php echo $infos->Name . " version " . $infos->Version ?></h3></center><center><a class="button big special" href="<? if(json_decode(file_get_contents("configs/config.json"), true)["Anyone dl"] and !$fgmembersite->CheckLogin()) { echo "login/login.php?msg=You must be logged to do this action."} else { echo $infos->Download } ?>">Download resource</a></center>
+<center><img src='images/<? echo $infos->Name ?>.png'></img><h3>Resource <?php echo $infos->Name . " version " . $infos->Version ?></h3></center><center><a class="button big special" href="<? if(json_decode(file_get_contents("configs/config.json"), true)["Anyone dl"] and !$fgmembersite->CheckLogin()) { echo "login/login.php?msg=You must be logged to perform this action."; } else { echo "download.php?res=$id"; } if(isset($_GET["isWaiting"])) { echo "&isWaiting"; } ?>">Download resource</a></center>
 				<header class="major">
 				 <div class="container">
 					 <section class="special box">
@@ -71,6 +71,7 @@ A
 					 </section>
 				</div>
 			</header>
+			<header class="major">
 				 <div class="container">
 					 <section class="special box">
 					 <h2>Ratings</h2><hr/>
@@ -96,8 +97,20 @@ A;
 					 } else {
 						 echo "<a href='login.php'><button>Login to review !</button></a>";
 					 }
+					 ?>
 					 </section>
 				</div>
+			</header>
+			<header class="major">
+				 <div class="container">
+					 <section class="special box">
+					 <h4><u>Author:</u> <?php echo $infos->Author;?>
+					 <u>Version:</u> <?php echo $infos->Version; ?>
+					 <u>Downloads:</u> <?php echo $infos->Downloads; ?>
+					 <u>Category:</u> <?php echo $infos->Category; ?>
+					 <u>Rating:</u> <?php $add = 0;foreach($infos->Ratings as $p => $rate) {$add += $rate[1];}$add /= count($this->Ratings);for($i = 1; $i <= $add; $i++) {$r .= "★";}for($i = 5; $i > $add; $i--) {$r .= "☆";}echo $r ?>
+					 </section>
+			     </div>
 			</header>
 </section>
 <section id="comments" class="body">

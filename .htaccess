@@ -6,6 +6,9 @@ deny from all
 <files "resources/"> 
 deny from all 
 </files>
+<files "downloads/"> 
+deny from all 
+</files>
 <files ".vscode"> 
 deny from all 
 </files>

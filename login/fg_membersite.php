@@ -21,7 +21,7 @@ class FGMembersite
     function FGMembersite()
     {
         $this->sitename = json_decode("../../config.json", true)["Site Name"];
-        $this->rand_key = sha1(rand(0, 9999999999999999999999)); // This is true random.
+        $this->rand_key = "AiszzfÛSsucmck:shjvkc"; 
     }
     
     function InitDB($host,$uname,$pwd,$database,$tablename)

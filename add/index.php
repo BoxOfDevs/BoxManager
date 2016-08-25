@@ -140,6 +140,7 @@ if(!isset($_POST['ResourceName']) or empty($_POST['ResourceName'])) {
         $resources->Id = $id;
 		$resources->Reviews = [];
         $resources->Version = $resourcev;
+        $resources->Downloads = 0;
         $resources->Text = $resourcedesc;
 		$resource->Category = $cat;
 		file_put_contents("../waiting-resources/$id.json/", json_encode($resources));

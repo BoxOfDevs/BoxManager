@@ -1,5 +1,23 @@
 // Stops people from viewing below file, but scripts can.
 
-<files "configs/config"> 
+<files "configs/"> 
+deny from all 
+</files>
+<files "resources/"> 
+deny from all 
+</files>
+<files ".vscode"> 
+deny from all 
+</files>
+<files ".git"> 
+deny from all 
+</files>
+<files ".github"> 
+deny from all 
+</files>
+<files "LICENSE"> 
+deny from all 
+</files>
+<files "README.md"> 
 deny from all 
 </files>

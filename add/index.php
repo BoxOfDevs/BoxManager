@@ -142,7 +142,7 @@ if(!isset($_POST['ResourceName']) or empty($_POST['ResourceName'])) {
         $resources->Version = $resourcev;
         $resources->Text = $resourcedesc;
 		$resource->Category = $cat;
-		file_put_contents("../resources/$id.json/", json_encode($resources));
+		file_put_contents("../waiting-resources/$id.json/", json_encode($resources));
 		echo "<script>alert('Resource ".$resourcename." has been succefully uploaded.');</script>";
 	} else {
 		$error = "Please login to upload a resource";

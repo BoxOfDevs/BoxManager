@@ -15,11 +15,14 @@ $has_comments = (count($comments) > 0);
 error_reporting(-1);
 if (isset($_GET["thread"])) {
 	$id = htmlspecialchars($_GET["thread"]);
-	
-	if(!file_exists("resources/$id.thread")) {
-	echo "<script>location.replace('index.php');</script>";
+	if(!isset($_GET["isWaiting"])) {
+		if(!file_exists("resources/$id.json")) {
+			echo "<script>location.replace('index.php');</script>";
+		}
 	} else {
-		
+		if(!file_exists("waiting-resources/$id.json")) {
+			echo "<script>location.replace('index.php');</script>";
+		}
 	}
 }
 if(!isset($id)) {
@@ -149,7 +152,7 @@ A;
       </form>
       
     </div>
-			
+		<button class="big special button" onClick="location.replace('moderation-queue.php?approve=<?php echo $id; ?>'">Approve resource !</button>	
 	</section>
 	
 </body>

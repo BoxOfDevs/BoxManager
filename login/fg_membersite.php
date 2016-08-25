@@ -18,9 +18,9 @@ class FGMembersite
     var $error_message;
     
     //-----Initialization -------
-    function FGMembersite()
+    function __construct()
     {
-        $this->sitename = json_decode(file_get_contents(__DIR__ . "/../configs/config.json"), true)["Site Name"];
+        $this->sitename = json_decode(file_get_contents(__DIR__ . "/../configs/config.json"), true)["Site name"];
         $this->rand_key = "AiszzfÛSsucmck:shjvkc"; 
     }
     

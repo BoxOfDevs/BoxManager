@@ -68,15 +68,7 @@ function is_valid_file($id) {
 }
 return true;
 }
-require_once("./login/membersite_config.php"); // Check config
-if(!isset($_POST['ResourceName']))
-$resources->Name = $resourcename;
-$resources->Title = $resourcesdesc;
-		$resources->Download = $_FILES['ResourceLink']['name'];
-        $resources->Id = $id;
-		$resources->Reviews = [];
-        $resources->Version = $resourcev;
-        $resources->Text = $resourcedesc;
+require_once("../login/membersite_config.php"); // Check config
 if(!$fgmembersite->CheckLogin()) // Check login
 {
 	echo "<script>alert('You're not logged in ! PLease login before adding anything.');location.replace('login.php');</script>";

@@ -52,7 +52,7 @@ class FormValidator
     var $error_hash;
 	var $custom_validators;
 	
-	function FormValidator()
+	function __construct()
 	{
 		$this->validator_array = array();
         $this->error_hash = array();

@@ -16,7 +16,7 @@ if(isset($_POST['submitted']))
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
     <title>Register</title>
     <link rel="STYLESHEET" type="text/css" href="style/fg_membersite.css" />
-    <script type='text/javascript' src="gen_validatorv31.js'></script>
+    <script type='text/javascript' src="gen_validatorv31.js"></script>
     <link rel="STYLESHEET" type="text/css" href="pwdwidget.css" />
     <script src="pwdwidget.js" type="text/javascript"></script>      
 </head>

@@ -20,7 +20,7 @@ class FGMembersite
     //-----Initialization -------
     function FGMembersite()
     {
-        $this->sitename = json_decode("../configs/config.json", true)["Site Name"];
+        $this->sitename = json_decode(file_get_contents(__DIR__ . "/../configs/config.json"), true)["Site Name"];
         $this->rand_key = "AiszzfÛSsucmck:shjvkc"; 
     }
     
@@ -845,3 +845,4 @@ class FGMembersite
     }    
 }
 ?>
+

@@ -1,6 +1,6 @@
 <?php
 require('comments/Persistence.php');
-require('login/fg_membersite.php');
+require_once("./login/membersite_config.php");
 $comment_post_ID = 1;
 $db = new Persistence();
 $comments = $db->get_comments($comment_post_ID);

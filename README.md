@@ -23,5 +23,5 @@ If you make changes to the code **you can't** distribute the material.
 
 # Notes
 
-This is brought to you by the [BoxOfDevs] (http://boxofdevs.com) team for free, if you see anyone else distributing or selling our work for money, **DO NOT DOWNLOAD/BUY IT FROM ANYONE** contact us immediantly.
+This is brought to you by the [BoxOfDevs] (http://boxofdevs.com) team for free, if you see anyone else distributes or sells our work for money, **DO NOT DOWNLOAD/BUY IT** and contact us immediantly.
 <!-- Soon, we will create a special badge to certify which website has been approved by the BoxOfDevs team to give you a download link -->

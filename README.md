@@ -1,15 +1,19 @@
 # BoxManager
 Our very own resource manager, Note: Its currently incomplete
 
+# Installation
 
-
+At the moment, you must download a .zip file from this repo, we will give you a download link soon.
+You do not need SSH access, but we recommend using the latest PHP and MySQL version, currently, there is no minimum PHP or MySQL requirement.
+<!-- Someone please find out what version people need!! -->
+You must have already made a MySQL database, because we can't.
 
 # Customisation
 
 With knowledge, you are able to customise how the forms look.
 With a bit of knowledge, you can also create your own BBCodes and your own forum codes!    
 
-# Legality
+# License
 
 This work is licensed under the [BoxOfDevs license](https://github.com/BoxOfDevs/BoxManager)
 

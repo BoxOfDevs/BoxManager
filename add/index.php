@@ -58,7 +58,7 @@ function is_valid_file($id) {
         throw new RuntimeException('Failed to move uploaded file.');
     }
 
-    echo 'File is uploaded successfully.';
+    echo 'File has been uploaded successfully.';
 
 } catch (RuntimeException $e) {
 

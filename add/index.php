@@ -1,4 +1,5 @@
 <?php
+require_once("../login/membersite_config.php"); // Check config
 error_reporting(-1);
 function is_valid_file($id) {
 	try {
@@ -68,7 +69,6 @@ function is_valid_file($id) {
 }
 return true;
 }
-require_once("../login/membersite_config.php"); // Check config
 if(!$fgmembersite->CheckLogin()) // Check login
 {
 	echo "<script>alert('You're not logged in ! PLease login before adding anything.');location.replace('login.php');</script>";

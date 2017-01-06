@@ -1,6 +1,6 @@
 <?php
 // The latest version
-define('REMOTE_VERSION', 'http://mc-pe.ga/bm/version.txt');
+define('REMOTE_VERSION', 'http://boxofdevs.com/BoxManager/version.txt');
 
 // this is the version of the this script
 // REMEMBER TO CHANGE THIS
@@ -11,9 +11,9 @@ function isLatest()
     return version_compare(VERSION, $remoteVersion, 'ge');
 }
 if ($version < $remoteVersion) {
-   echo "A new version of the script is available"
+   echo "A new version of the script is available";
 } else {
-   echo "Your version (" . $version . ") is up to date."
+   echo "Your version (" . $version . ") is up to date.";
 }
 
  

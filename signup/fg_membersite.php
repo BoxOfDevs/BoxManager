@@ -3,7 +3,7 @@
 require_once("class.phpmailer.php");
 require_once("formvalidator.php");
 
-class FGMembersite
+class FGMembersite {
 
     var $admin_email;
     var $from_address;
@@ -582,7 +582,7 @@ class FGMembersite
 
             $error='';
             $error_hash = $validator->GetErrors();
-            foreach($error_hash as $inpname => $inp_err)
+            foreach($error_hash as $inpname => $inp_err) {
 
                 $error .= $inpname.':'.$inp_err."\n";
             }
@@ -802,8 +802,7 @@ class FGMembersite
         if( function_exists( "mysql_real_escape_string" ) ) {
 
               $ret_str = mysqli_real_escape_string($this->connection,  $str );
-        }
-        else
+        } else {
 
               $ret_str = addslashes( $str );
         }

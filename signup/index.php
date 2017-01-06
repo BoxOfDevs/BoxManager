@@ -1,5 +1,5 @@
 <?PHP
-require_once("./include/membersite_config.php");
+require_once("./membersite_config.php");
 
 if(isset($_POST['submitted']))
 {
@@ -31,30 +31,27 @@ if(isset($_POST['submitted']))
 <input type='hidden' name='submitted' id='submitted' value='1'/>
 
 <div class='short_explanation'>* required fields</div>
-<input type='text'  class='spmhidip' name='<?php echo $fgmembersite->GetSpamTrapInputName(); ?>' />
+<input type='hidden'  class='spmhidip' name='<?php echo $fgmembersite->GetSpamTrapInputName(); ?>' id='<?php echo $fgmembersite->GetSpamTrapInputName(); ?>' />
 
 <div><span class='error'><?php echo $fgmembersite->GetErrorMessage(); ?></span></div>
 <div class='container'>
-    <label for='name' >Your Full Name*: </label><br/>
-    <input type='text' name='name' id='name' value='<?php echo $fgmembersite->SafeDisplay('name') ?>' maxlength="50" /><br/>
-    <span id='register_name_errorloc' class='error'></span>
+    <label for='name' >Your Full Name*: </label>
+    <input type='text' name='name' id='name' value='<?php echo $fgmembersite->SafeDisplay('name') ?>' maxlength="50" />
+    <span id='register_name_errorloc' class='error'></span><br>
 </div>
 <div class='container'>
-    <label for='email' >Email Address*:</label><br/>
-    <input type='text' name='email' id='email' value='<?php echo $fgmembersite->SafeDisplay('email') ?>' maxlength="50" /><br/>
-    <span id='register_email_errorloc' class='error'></span>
+    <label for='email' >Email Address*:</label>
+    <input type='text' name='email' id='email' value='<?php echo $fgmembersite->SafeDisplay('email') ?>' maxlength="50" />
+    <span id='register_email_errorloc' class='error'></span><br>
 </div>
 <div class='container'>
-    <label for='username' >UserName*:</label><br/>
-    <input type='text' name='username' id='username' value='<?php echo $fgmembersite->SafeDisplay('username') ?>' maxlength="50" /><br/>
-    <span id='register_username_errorloc' class='error'></span>
+    <label for='username' >UserName*:</label>
+    <input type='text' name='username' id='username' value='<?php echo $fgmembersite->SafeDisplay('username') ?>' maxlength="50" />
+    <span id='register_username_errorloc' class='error'></span><br>
 </div>
 <div class='container' style='height:80px;'>
-    <label for='password' >Password*:</label><br/>
-    <div class='pwdwidgetdiv' id='thepwddiv' ></div>
-    <noscript>
+    <label for='password' >Password*:</label>
     <input type='password' name='password' id='password' maxlength="50" />
-    </noscript>    
     <div id='register_password_errorloc' class='error' style='clear:both'></div>
 </div>
 

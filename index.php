@@ -5,19 +5,29 @@ if(file_exists("install/index.php")) {
 }
 require_once("./login/membersite_config.php");
 $login = $fgmembersite->CheckLogin();
-?><html><head><title>BoxManager</title>
-<link rel="icon" href="favicon.png" />
-<!-- <script src="../js/jquery.min.js"></script>
-<script src="../js/skel.min.js"></script>
-<script src="../js/skel-layers.min.js"></script>
-<script src="../js/init.js"></script> -->
-<link rel="stylesheet" href="../css/skel.css" />
-<link rel="stylesheet" href="../css/style.css" />
-<link rel="stylesheet" href="../css/style-xlarge.css" />
-</head>
+?><html>
+	<head>
+		<title>BoxManager</title>
+		<link rel="icon" href="favicon.png" />
+		<script src="js/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<link rel="stylesheet" href="css/skel.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/style-xlarge.css" />
+    	<meta lang="en">
+	  	<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <meta http-equiv="cache-control" content="max-age=0" />
+	    <meta http-equiv="cache-control" content="no-cache" />
+	    <meta http-equiv="expires" content="0" />
+	    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+	    <meta http-equiv="pragma" content="no-cache" />
+	</head>
 <body>
-<header id="header" class="skel-layers-fixed">
-				<a href="<?php echo json_decode(file_get_contents("configs/config.json"), true)["Site Main"] ?>"><img src="images/logo.png" height="43" width="43"></img><?php echo json_decode(file_get_contents("configs/config.json"))->{"Site Name"}; ?></a>
+	<header id="header" class="skel-layers-fixed">
+				<a href="<?php var_dump(json_decode(file_get_contents("configs/config.json"), true));echo json_decode(file_get_contents("configs/config.json"), true)["Site Main"] ?>"><img src="images/logo.png" height="43" width="43"></img><?php echo json_decode(file_get_contents("configs/config.json"), true)["Site Name"]; ?></a>
 				<nav id="nav">
 					<ul>
 					<?php
@@ -55,12 +65,7 @@ foreach(array_diff(scandir("resources/"), array('..', '.')) as $file) {
 		if(count($infos->Ratings) !== 0) {
 			$r = "";
 			$add /= count($infos->Ratings);
-			for($i = 1; $i <= $add; $i++) {
-				$r .= "★";
-			}
-			for($i = 5; $i > $add; $i--) {
-				$r .= "☆";
-			}
+			$r = str_repeat("★", $add) . str_repeat("☆", 5 - $add);
 		}
 		echo <<<A
 <div class='4u'>
@@ -82,12 +87,7 @@ A;
 				$add += $rate[1];
 			}
 			$add /= count($this->Ratings);
-			for($i = 1; $i <= $add; $i++) {
-				$r .= "★";
-			}
-			for($i = 5; $i > $add; $i--) {
-				$r .= "☆";
-			}
+			$r = str_repeat("★", $add) . str_repeat("☆", 5 - $add);
 		echo <<<A
 <div class='4u'>
 <section class='special box'>
@@ -110,7 +110,7 @@ A;
 ?>
 </div>
 <div class="row">
-<center>
+<center style="width: 100%;">
 <div class='4u'>
 <section class='special box'>
 <h3>Categories</h3>
@@ -133,9 +133,10 @@ foreach($cs as $c => $pls) {
 }
 ?>
 </tr>
+</table>
 </section>
 </div>
-</center>
+</center><br>
 <p><a href="http://boxofdevs.com">Powered by BoxManager - Copyright © BoxOfDevs Team 2016</a></p>
 </div>
 </div>

@@ -5,8 +5,7 @@ define('REMOTE_VERSION', 'http://boxofdevs.com/BoxManager/version.txt');
 // this is the version of the this script
 // REMEMBER TO CHANGE THIS
 define('VERSION', '1.0.0');
-function isLatest()
-{
+function isLatest() {
     $remoteVersion=trim(file_get_contents(REMOTE_VERSION));
     return version_compare(VERSION, $remoteVersion, 'ge');
 }

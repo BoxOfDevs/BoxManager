@@ -17,7 +17,7 @@
                        /*username*/json_decode(file_get_contents(__DIR__. "/../configs/config.json"),true)["Database admin username"], 
                        /*password*/json_decode(file_get_contents(__DIR__. "/../configs/config.json"),true)["Database admin password"], 
                        /*database name*/json_decode(file_get_contents(__DIR__ . "/../configs/config.json"),true)["Database name"], 
-                       /*table name*/'resource'); 
+                       /*table name*/'users'); 
   
   
  $fgmembersite->SetRandomKey('qSRcVS6DrTzrPvr'); 

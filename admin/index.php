@@ -54,10 +54,11 @@ echo "<li><a href='index.php?s=index'><p>Back to index<p></a></li>";
 foreach(array_diff(scandir("../resources"), [".", ".."]) as $res) {
     $infos = json_decode(file_get_contents("../resources/$res"));
     $id = str_ireplace(".json", "", $res);
-    echo "<li><p>{$infos->Name}<p><a href='../reader.php?thread=$id'><button class='alt'>View</button></a><a href='index.php?s=resources&deleteRes=$id'><button class='alt'>Delete</button></a><a href='edit.php?id=$id'><button class='alt'>Edit</button></a></li>"
+    echo "<li><p>{$infos->Name}<p><a href='../reader.php?thread=$id'><button class='alt'>View</button></a><a href='index.php?s=resources&deleteRes=$id'><button class='alt'>Delete</button></a><a href='edit.php?id=$id'><button class='alt'>Edit</button></a></li>";
 }
 break;
 }
+?>
 </ul>
 </body>
 <p><a href="http://boxofdevs.com">Powered by BoxManager - Copyright © BoxOfDevs Team 2016.</a></p>

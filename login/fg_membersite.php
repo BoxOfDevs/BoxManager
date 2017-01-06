@@ -342,7 +342,7 @@ class FGMembersite {
         $pwdmd5 = md5($password);
         $qry = "Select name, email from $this->tablename where username='$username' and password='$pwdmd5' and confirmcode='y'";
         
-        $result = mysqli_query($this->connection, $qry,$this->connection);
+        $result = mysqli_query($this->connection, $qry);
         
         if(!$result || mysqli_num_rows($this->connection, $result) <= 0) {
 
@@ -368,7 +368,7 @@ class FGMembersite {
         }   
         $confirmcode = $this->SanitizeForSQL($_GET['code']);
         
-        $result = mysqli_query($this->connection, "Select name, email from $this->tablename where confirmcode='$confirmcode'",$this->connection);   
+        $result = mysqli_query($this->connection, "Select name, email from $this->tablename where confirmcode='$confirmcode'");   
         if(!$result || mysqli_num_rows($this->connection, $result) <= 0) {
 
             $this->HandleError("Wrong confirm code.");
@@ -380,9 +380,9 @@ class FGMembersite {
         
         $qry = "Update $this->tablename Set confirmcode='y' Where  confirmcode='$confirmcode'";
         
-        if(!mysqli_query($this->connection,  $qry ,$this->connection)) {
+        if(!mysqli_query($this->connection,  $qry)) {
 
-            $this->HandleDBError("Error inserting data to the table\nquery:$qry");
+            $this->HandleDBError("Error updating data to the table\nquery:$qry");
             return false;
         }      
         return true;
@@ -405,7 +405,7 @@ class FGMembersite {
         
         $qry = "Update $this->tablename Set password='".md5($newpwd)."' Where  id_user=".$user_rec['id_user']."";
         
-        if(!mysqli_query($this->connection,  $qry ,$this->connection)) {
+        if(!mysqli_query($this->connection,  $qry)) {
 
             $this->HandleDBError("Error updating the password \nquery:$qry");
             return false;
@@ -422,7 +422,7 @@ class FGMembersite {
         }   
         $email = $this->SanitizeForSQL($email);
         
-        $result = mysqli_query($this->connection, "Select * from $this->tablename where email='$email'",$this->connection);  
+        $result = mysqli_query($this->connection, "Select * from $this->tablename where email='$email'");  
 
         if(!$result || mysqli_num_rows($this->connection, $result) <= 0) {
 
@@ -701,7 +701,7 @@ class FGMembersite {
 
         $field_val = $this->SanitizeForSQL($formvars[$fieldname]);
         $qry = "select username from $this->tablename where $fieldname='".$field_val."'";
-        $result = mysqli_query($this->connection, $qry,$this->connection);   
+        $result = mysqli_query($this->connection, $qry);   
         if($result && mysqli_num_rows($this->connection, $result) > 0) {
 
             return false;
@@ -711,21 +711,21 @@ class FGMembersite {
     
     function DBLogin() {
 
-        $this->connection = mysqli_connect($this->db_host,$this->username,$this->pwd);
+        $this->connection = mysqli_connect($this->db_host,$this->username,$this->pwd, $this->database);
 
         if(!($this->connection)) {
    
-            $this->HandleDBError("Database Login failed! Please make sure that the DB login credentials provided are correct");
+            $this->HandleDBError("Database Login failed! " . mysqli_connect_error($this->connection));
             return false;
         }
-        if(!mysqli_select_db($this->connection, $this->database, $this->connection)) {
+        // if(!mysqli_select_db($this->connection, $this->database)) {
 
-            $this->HandleDBError('Failed to select database: '.$this->database.' Please make sure that the database name provided is correct');
-            return false;
-        }
-        if(!mysqli_query($this->connection, "SET NAMES 'UTF8'",$this->connection)) {
+        //     $this->HandleDBError('Failed to select database: '.$this->database.'. ');
+        //     return false;
+        // }
+        if(!mysqli_query($this->connection, "SET NAMES 'UTF8'")) {
 
-            $this->HandleDBError('Error setting utf8 encoding');
+            $this->HandleDBError('Error setting utf8 encoding: ' . mysqli_error($this->connection));
             return false;
         }
         return true;
@@ -743,18 +743,19 @@ class FGMembersite {
     
     function CreateTable() {
 
+        if(mysqli_query($this->connection, "SHOW TABLES LIKE '".$this->tablename."'")->num_rows == 1) return true; // Not makeing the table if exists (correcting some errors)
+
         $qry = "Create Table $this->tablename (".
                 "id_user INT NOT NULL AUTO_INCREMENT ,".
                 "name VARCHAR( 128 ) NOT NULL ,".
                 "email VARCHAR( 64 ) NOT NULL ,".
-                "phone_number VARCHAR( 16 ) NOT NULL ,".
                 "username VARCHAR( 16 ) NOT NULL ,".
                 "password VARCHAR( 32 ) NOT NULL ,".
                 "confirmcode VARCHAR(32) ,".
                 "PRIMARY KEY ( id_user )".
                 ")";
                 
-        if(!mysqli_query($this->connection, $qry,$this->connection)) {
+        if(!mysqli_query($this->connection, $qry)) {
 
             $this->HandleDBError("Error creating the table \nquery was\n $qry");
             return false;
@@ -769,22 +770,17 @@ class FGMembersite {
         
         $formvars['confirmcode'] = $confirmcode;
         
-        $insert_query = 'insert into '.$this->tablename.'(
-                name,
-                email,
-                username,
-                password,
-                confirmcode
-                )
+        $insert_query = 'insert into '.$this->tablename.'
                 values
                 (
                 "' . $this->SanitizeForSQL($formvars['name']) . '",
                 "' . $this->SanitizeForSQL($formvars['email']) . '",
                 "' . $this->SanitizeForSQL($formvars['username']) . '",
                 "' . md5($formvars['password']) . '",
-                "' . $confirmcode . '"
+                "' . $confirmcode . '",
+                "' . (mysqli_query($this->connection,  "SELECT * FROM $this->tablename")->num_rows + 1) . '"
                 )';      
-        if(!mysqli_query($this->connection,  $insert_query ,$this->connection)) {
+        if(!mysqli_query($this->connection,  $insert_query)) {
 
             $this->HandleDBError("Error inserting data to the table\nquery:$insert_query");
             return false;

@@ -7,13 +7,8 @@ if(isset($_POST['submitted']))
 {
 	
 	
-	if($fgmembersite->RegisterUser())
-	{
-		
-		
-		$fgmembersite->RedirectToURL("thank-you.html");
-		
-		
+	if($fgmembersite->Login()) {
+		$fgmembersite->RedirectToURL("../index.php");
 	}
 	
 	
@@ -54,8 +49,8 @@ if(!$login){
 	
 	
 	echo <<<A
-	<li><a href="signup/">Sign up</a></li>
-	<li><a href="login/">Login</a></li>
+	<li><a href="../signup/">Sign up</a></li>
+	<li><a href="./">Login</a></li>
 A;
 	
 	
@@ -70,7 +65,6 @@ A;
 	
 	</li>
 	<li><a href="add/">Add resource</a></li>
-	<li><a href="login/logout.php">Logout</a></li>
 A;
 	
 	
@@ -89,7 +83,7 @@ A;
                         <center style="width: 100%;">
                             <div class='4u'>
                                 <section class='special box'>
-                                    <form id='register' action='<?php echo $fgmembersite->GetSelfScript(); ?>' method='post' accept-charset='UTF-8'>
+                                    <form id='login' action='<?php echo $fgmembersite->GetSelfScript(); ?>' method='post' accept-charset='UTF-8'>
                                         <fieldset>
 
                                             <input type='hidden' name='submitted' id='submitted' value='1' />
@@ -98,18 +92,12 @@ A;
                                             <input type='hidden' class='spmhidip' name='<?php echo $fgmembersite->GetSpamTrapInputName();?>' id='<?php echo $fgmembersite->GetSpamTrapInputName();?>' />
 
                                             <div><span class='error'><?php echo $fgmembersite->GetErrorMessage();?></span></div>
-                                                <label for='name'>Your Full Name*: </label>
-                                                <input type='text' name='name' id='name' value='<?php echo $fgmembersite->SafeDisplay(' name ') ?>' maxlength="50" />
-                                                <span id='register_name_errorloc' class='error'></span><br>
-                                                <label for='email'>Email Address*:</label>
-                                                <input type='text' name='email' id='email' value='<?php echo $fgmembersite->SafeDisplay(' email ') ?>' maxlength="50" />
-                                                <span id='register_email_errorloc' class='error'></span><br>
                                                 <label for='username'>Username*:</label>
                                                 <input type='text' name='username' id='username' value='<?php echo $fgmembersite->SafeDisplay(' username ') ?>' maxlength="50" />
-                                                <span id='register_username_errorloc' class='error'></span><br>
+                                                <span id='login_username_errorloc' class='error'></span><br>
                                                 <label for='password'>Password*:</label>
                                                 <input type='password' name='password' id='password' maxlength="50" />
-                                                <div id='register_password_errorloc' class='error' style='clear:both'></div>
+                                                <div id='login_password_errorloc' class='error' style='clear:both'></div>
                                             </div>
 
 
@@ -125,14 +113,9 @@ A;
                                         var pwdwidget = new PasswordWidget('thepwddiv', 'password');
                                         pwdwidget.MakePWDWidget();
 
-                                        var frmvalidator = new Validator("register");
+                                        var frmvalidator = new Validator("login");
                                         frmvalidator.EnableOnPageErrorDisplay();
                                         frmvalidator.EnableMsgsTogether();
-                                        frmvalidator.addValidation("name", "req", "Please provide your name");
-
-                                        frmvalidator.addValidation("email", "req", "Please provide your email address");
-
-                                        frmvalidator.addValidation("email", "email", "Please provide a valid email address");
 
                                         frmvalidator.addValidation("username", "req", "Please provide a username");
 

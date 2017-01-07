@@ -125,6 +125,10 @@ class FGMembersite {
         
         $_SESSION[$this->GetLoginSessionVar()] = $username;
         
+        $_SESSION["name_of_user"] = mysqli_query($this->connection, "SELECT name FROM users WHERE username='$username'")->fetch_array()[0];
+        
+        $_SESSION["email_of_user"] = mysqli_query($this->connection, "SELECT email FROM users WHERE username='$username'")->fetch_array()[0];
+        
         return true;
     }
     
@@ -134,11 +138,7 @@ class FGMembersite {
 
          $sessionvar = $this->GetLoginSessionVar();
          
-         if(empty($_SESSION[$sessionvar])) {
-
-            return false;
-         }
-         return true;
+         return !(empty($_SESSION[$sessionvar]) || is_null($_SESSION[$sessionvar]));
     }
     
     function UserFullName() {
@@ -250,7 +250,7 @@ class FGMembersite {
         
         $pwd = trim($_POST['oldpwd']);
         
-        if($user_rec['password'] != md5($pwd)) {
+        if($user_rec['password'] != hash("sha512", $pwd)) {
 
             $this->HandleError("The old password does not match!");
             return false;
@@ -287,7 +287,7 @@ class FGMembersite {
     
     function GetSpamTrapInputName() {
 
-        return 'sp'.md5('KHGdnbvsgst'.$this->rand_key);
+        return 'sp'.hash("sha512", 'KHGdnbvsgst'.$this->rand_key);
     }
     
     function GetErrorMessage() {
@@ -320,13 +320,13 @@ class FGMembersite {
 
         $host = $_SERVER['SERVER_NAME'];
 
-        $from ="nobody@$host";
+        $from ="noreply@$host";
         return $from;
     } 
     
     function GetLoginSessionVar() {
 
-        $retvar = md5($this->rand_key);
+        $retvar = hash("sha512", $this->rand_key);
         $retvar = 'usr_'.substr($retvar,0,10);
         return $retvar;
     }
@@ -339,12 +339,12 @@ class FGMembersite {
             return false;
         }          
         $username = $this->SanitizeForSQL($username);
-        $pwdmd5 = md5($password);
+        $pwdmd5 = hash("sha512", $password); // No longer md5 :p
         $qry = "Select name, email from $this->tablename where username='$username' and password='$pwdmd5' and confirmcode='y'";
         
         $result = mysqli_query($this->connection, $qry);
         
-        if(!$result || mysqli_num_rows($this->connection, $result) <= 0) {
+        if($result->num_rows <= 0) {
 
             $this->HandleError("Error logging in. The username or password does not match");
             return false;
@@ -369,7 +369,7 @@ class FGMembersite {
         $confirmcode = $this->SanitizeForSQL($_GET['code']);
         
         $result = mysqli_query($this->connection, "Select name, email from $this->tablename where confirmcode='$confirmcode'");   
-        if(!$result || mysqli_num_rows($this->connection, $result) <= 0) {
+        if(!$result || $result->num_rows < 1) {
 
             $this->HandleError("Wrong confirm code.");
             return false;
@@ -390,7 +390,7 @@ class FGMembersite {
     
     function ResetUserPasswordInDB($user_rec) {
 
-        $new_password = substr(md5(uniqid()),0,10);
+        $new_password = substr(hash("sha512", uniqid()),0,10);
         
         if(false == $this->ChangePasswordInDB($user_rec,$new_password)) {
 
@@ -403,7 +403,7 @@ class FGMembersite {
 
         $newpwd = $this->SanitizeForSQL($newpwd);
         
-        $qry = "Update $this->tablename Set password='".md5($newpwd)."' Where  id_user=".$user_rec['id_user']."";
+        $qry = "Update $this->tablename Set password='".hash("sha512", $newpwd)."' Where  id_user=".$user_rec['id_user']."";
         
         if(!mysqli_query($this->connection,  $qry)) {
 
@@ -477,6 +477,8 @@ class FGMembersite {
         $mailer->Subject = "Registration Completed: ".$user_rec['name'];
 
         $mailer->From = $this->GetFromAddress();         
+
+        $mailer->FromName = "BoxManager - No-reply";         
         
         $mailer->Body ="A new user registered at ".$this->sitename."\r\n".
         "Name: ".$user_rec['name']."\r\n".
@@ -491,7 +493,7 @@ class FGMembersite {
     
     function GetResetPasswordCode($email) {
 
-       return substr(md5($email.$this->sitename.$this->rand_key),0,10);
+       return substr(hash("sha512", $email.$this->sitename.$this->rand_key),0,10);
     }
     
     function SendResetPasswordLink($user_rec) {
@@ -507,6 +509,8 @@ class FGMembersite {
         $mailer->Subject = "Your reset password request at ".$this->sitename;
 
         $mailer->From = $this->GetFromAddress();
+
+        $mailer->FromName = "BoxManager - No-reply";    
         
         $link = $this->GetAbsoluteURLFolder().
                 '/resetpwd.php?email='.
@@ -540,6 +544,8 @@ class FGMembersite {
         $mailer->Subject = "Your new password for ".$this->sitename;
 
         $mailer->From = $this->GetFromAddress();
+
+        $mailer->FromName = "BoxManager - No-reply";    
         
         $mailer->Body ="Hello ".$user_rec['name']."\r\n\r\n".
         "Your password is reset successfully. ".
@@ -611,6 +617,8 @@ class FGMembersite {
         $mailer->Subject = "Your registration with ".$this->sitename;
 
         $mailer->From = $this->GetFromAddress();        
+
+        $mailer->FromName = "BoxManager - No-reply";    
         
         $confirmcode = $formvars['confirmcode'];
         
@@ -654,6 +662,8 @@ class FGMembersite {
         $mailer->Subject = "New registration: ".$formvars['name'];
 
         $mailer->From = $this->GetFromAddress();         
+
+        $mailer->FromName = "BoxManager - No-reply";           
         
         $mailer->Body ="A new user registered at ".$this->sitename."\r\n".
         "Name: ".$formvars['name']."\r\n".
@@ -746,12 +756,12 @@ class FGMembersite {
         if(mysqli_query($this->connection, "SHOW TABLES LIKE '".$this->tablename."'")->num_rows == 1) return true; // Not makeing the table if exists (correcting some errors)
 
         $qry = "Create Table $this->tablename (".
-                "id_user INT NOT NULL AUTO_INCREMENT ,".
                 "name VARCHAR( 128 ) NOT NULL ,".
                 "email VARCHAR( 64 ) NOT NULL ,".
                 "username VARCHAR( 16 ) NOT NULL ,".
-                "password VARCHAR( 32 ) NOT NULL ,".
-                "confirmcode VARCHAR(32) ,".
+                "password VARCHAR( 128 ) NOT NULL ,".
+                "confirmcode VARCHAR(128) ,".
+                "id_user INT NOT NULL AUTO_INCREMENT ,".
                 "PRIMARY KEY ( id_user )".
                 ")";
                 
@@ -776,7 +786,7 @@ class FGMembersite {
                 "' . $this->SanitizeForSQL($formvars['name']) . '",
                 "' . $this->SanitizeForSQL($formvars['email']) . '",
                 "' . $this->SanitizeForSQL($formvars['username']) . '",
-                "' . md5($formvars['password']) . '",
+                "' . hash("sha512", $formvars['password']) . '",
                 "' . $confirmcode . '",
                 "' . (mysqli_query($this->connection,  "SELECT * FROM $this->tablename")->num_rows + 1) . '"
                 )';      
@@ -791,7 +801,7 @@ class FGMembersite {
 
         $randno1 = rand();
         $randno2 = rand();
-        return md5($email.$this->rand_key.$randno1.''.$randno2);
+        return hash("sha512", $email.$this->rand_key.$randno1.''.$randno2);
     }
     function SanitizeForSQL($str) {
 

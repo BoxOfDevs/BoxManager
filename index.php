@@ -27,11 +27,11 @@ $login = $fgmembersite->CheckLogin();
 	</head>
 <body>
 	<header id="header" class="skel-layers-fixed">
-				<a href="<?php var_dump(json_decode(file_get_contents("configs/config.json"), true));echo json_decode(file_get_contents("configs/config.json"), true)["Site Main"] ?>"><img src="images/logo.png" height="43" width="43"></img><?php echo json_decode(file_get_contents("configs/config.json"), true)["Site Name"]; ?></a>
+				<a href="<?php echo json_decode(file_get_contents("configs/config.json"), true)["Site Main"] ?>"><img src="images/logo.png" height="43" width="43"></img><?php echo json_decode(file_get_contents("configs/config.json"), true)["Site Name"]; ?></a>
 				<nav id="nav">
 					<ul>
 					<?php
-					if($login){
+					if(!$login){
 						echo <<<A
 <li><a href="signup/">Sign up</a></li>
 <li><a href="login/">Login</a></li>
@@ -40,6 +40,7 @@ A;
 						echo <<<A
 <li>Welcome back, {$fgmembersite->UserFullName()}</li>
 <li><a href="add/">Add resource</a></li>
+<li><a href="login/logout.php">Logout</a></li>
 A;
 					}
 					?>

@@ -25,7 +25,7 @@ if(isset($_GET["approve"])) {
 					<?php
 					if(!$fgmembersite->CheckLogin()){
 						echo "<script>alert(\"You're not logined !\");location.replace('login.php');</script>";
-                        if(!$isResourceReviewer){// Will do this later...
+                        if(!$fgmembersite->isMod()){// Will do this later...
                              echo "<script>alert(\"You're not allowed to view this page !\");location.replace('login.php');</script>";
                         }
                         exit();
@@ -34,6 +34,14 @@ if(isset($_GET["approve"])) {
 <li>Welcome back, {$fgmembersite->UserFullName()}</li>
 <li><a href="add/">Add resource</a></li>
 A;
+A;
+                        if($fgmembersite->isAdmin()) {
+                            echo '<li><a href="admin/index.php">Admin CP</a></li>';
+                        }
+                        if($fgmembersite->isMod()) {
+                            echo '<li><a href="../moderation-queue.php">Moderation queue</a></li>';
+                        }
+                        echo '<li><a href="login/logout.php">Logout</a></li>';
 					}
 					?>
 					</ul>

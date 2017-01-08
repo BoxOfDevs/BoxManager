@@ -23,7 +23,7 @@ if(isset($_GET["approve"])) {
 				<nav id="nav">
 					<ul>
 					<?php
-					if($fgmembersite->CheckLogin()){
+					if(!$fgmembersite->CheckLogin()){
 						echo "<script>alert(\"You're not logined !\");location.replace('login.php');</script>";
                         if(!$isResourceReviewer){// Will do this later...
                              echo "<script>alert(\"You're not allowed to view this page !\");location.replace('login.php');</script>";
@@ -33,7 +33,7 @@ if(isset($_GET["approve"])) {
 						echo <<<A
 <li>Welcome back, {$fgmembersite->UserFullName()}</li>
 <li><a href="add/">Add resource</a></li>
-A
+A;
 					}
 					?>
 					</ul>
@@ -79,7 +79,7 @@ A;
 	} else {
 		$contents = file_get_contents("waiting-resources". DIRECTORY_SEPARATOR . $file);
 		$infos = json_decode($contents);
-		$cs = []
+		$cs = [];
 		foreach(json_decode(file_get_contents("configs/config.json"))["Categories"] as $c){
 			if(!isset($cs[$c])) {
 				$cs[$c] = 0;

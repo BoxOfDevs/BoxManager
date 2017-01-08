@@ -1,5 +1,5 @@
 <?php
-require('comments/Persistence.php');
+require_once('comments/Persistence.php');
 require_once("./login/membersite_config.php");
 $comment_post_ID = 1;
 $db = new Persistence();
@@ -18,27 +18,35 @@ if (isset($_GET["thread"])) {
 	if(!isset($_GET["isWaiting"])) {
 		if(!file_exists("resources/$id.json")) {
 			echo "<script>location.replace('index.php');</script>";
+			exit();
+		} else {
+			$infos = json_decode(file_get_contents("resources/$id.json"));
 		}
 	} else {
 		if(!file_exists("waiting-resources/$id.json")) {
 			echo "<script>location.replace('index.php');</script>";
+			exit();
+		} else {
+			$infos = json_decode(file_get_contents("waiting-resources/$id.json"));
 		}
 	}
 }
 if(!isset($id)) {
 	echo "<script>location.replace('index.php');</script>";
+	exit();
 }
 ?>
 <html>
 <head>
 <title><?php echo $infos->Name . " version " . $infos->Version ?></title>
-<link rel="stylesheet" href="/css/skel.css" />
-<link rel="stylesheet" href="/css/style.css" />
-<link rel="stylesheet" href="/css/style-xlarge.css" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/skel.min.js"></script>
-<script src="/js/skel-layers.min.js"></script>
-<script src="/js/init.js"></script>
+<link rel="stylesheet" href="css/skel.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/style-xlarge.css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/skel.min.js"></script>
+<script src="js/skel-layers.min.js"></script>
+<script src="js/init.js"></script>
+<script><?php require_once("Codes/BBCode.php"); ?></script>
 </head>
 <body>
 <header id="header" class="skel-layers-fixed">
@@ -46,7 +54,7 @@ if(!isset($id)) {
 				<nav id="nav">
 					<ul>
 					<?php
-					if($fgmembersite->CheckLogin()){
+					if(!$fgmembersite->CheckLogin()){
 						echo <<<A
 <li><a href="signup/">Sign up</a></li>
 <li><a href="login/">Login</a></li>
@@ -63,11 +71,17 @@ A;
 </header>
 
 <section id="one" class="wrapper style1">
-<center><img src='images/<? echo $infos->Name; ?>.png'></img><h3>Resource <?php echo $infos->Name . " version " . $infos->Version; ?></h3></center><center><a class="button big special" href="<? if(json_decode(file_get_contents("configs/config.json"), true)["Anyone dl"] and !$fgmembersite->CheckLogin()) { echo "login/login.php?msg=You must be logged to perform this action."; } else { echo "download.php?res=$id"; } if(isset($_GET["isWaiting"])) { echo "&isWaiting"; } ?>">Download resource</a></center>
+<center><img src='images/<?php echo $infos->Id; ?>.<?php echo $infos->Image; ?>' style="width: 50px; height: 50px;"></img><h3>Resource <?php echo $infos->Name . " version " . $infos->Version; ?></h3></center><center><a class="button big special" href="<?php 
+if(! (bool) (json_decode(file_get_contents("configs/config.json"), true)["Anyone dl"]) and !$fgmembersite->CheckLogin()) { 
+	echo "login/login.php?msg=You must be logged to perform this action."; 
+} else { 
+	echo "download.php?res=$id"; 
+} 
+if(isset($_GET["isWaiting"])) echo "&isWaiting"; ?>">Download resource</a></center>
 				<header class="major">
 				 <div class="container">
 					 <section class="special box">
-					 <?php requires("Codes/Codes.php");echo (new Codes())->toHTML($infos->Text); ?>
+					 <?php echo (new BBCode())->toHTML($infos->Text); ?>
 					 </section>
 				</div>
 			</header>

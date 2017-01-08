@@ -73,11 +73,11 @@ foreach(array_diff(scandir("resources/"), array('..', '.')) as $file) {
 <div class='4u'>
 <section class='special box'>
 <a href='reader.php?thread={$infos->Id}'>
-<img src='images/{$infos->Name}.png'></img>
+<img src='images/{$infos->Id}.{$infos->Image}' style="width: 50px; height: 50px;"></img>
 <h3>{$infos->Name}</h3>
 <br />
 <p>{$infos->Title}</p>
-<h4><span style="float: right;">{$r}</span><span style="float: right;">{$infos->Author}</span><span style="float: left;">{$infos->Category}</span></h4>
+<h4>{$r}<br>By {$infos->Author}<br>{$infos->Category}</h4>
 </a></section></div>"
 A;
 	} else {

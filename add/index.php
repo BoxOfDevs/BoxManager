@@ -112,7 +112,8 @@ if(!isset($_POST['ResourceName']) or empty($_POST['ResourceName'])) {
 		$cat = $_POST['Category'];
 
 		$resources = new stdClass();// Don't mind me, wanted to use it !
-        $resources->Author = $fgmembersite->UserFullName();
+        $resources->Author = $fgmembersite->Username();
+        $resources->{"Anyone dl"} = true;
         $resources->Name = $resourcename;
         $resources->Title = $resourcesdesc;
 		$resources->Download = $_FILES['ResourceLink']['name']; // For downloading

@@ -18,7 +18,7 @@ class FGMembersite {
     var $error_message;
     
     //-----Initialization -------
-    function FGMembersite() {
+    function __construct() {
 
         $this->sitename = json_decode(file_get_contents(__DIR__ . "/../configs/config.json"), true)["Site Name"];
         $this->rand_key = "AiszzfÛSsucmck:shjvkc"; 
@@ -144,6 +144,11 @@ class FGMembersite {
     function UserFullName() {
 
         return isset($_SESSION['name_of_user'])?$_SESSION['name_of_user']:'';
+    }
+    
+    function Username() {
+
+        return isset($_SESSION['username'])?$_SESSION['username']:'';
     }
     
     function UserEmail() {
@@ -355,6 +360,7 @@ class FGMembersite {
         
         $_SESSION['name_of_user']  = $row['name'];
         $_SESSION['email_of_user'] = $row['email'];
+        $_SESSION['username'] = $row['username'];
         
         return true;
     }

@@ -9,7 +9,7 @@ $infos = json_decode(file_get_contents((isset($_GET["isWaiting"]) ? "waiting-res
 header("Content-Type: application/octet-stream");
 header("Content-Transfer-Encoding: Binary");
 header("Content-disposition: attachment; filename=\"{$infos->Download}\"");
+echo file_get_contents("downloads/" . $_GET["res"] . "." . explode(".", $infos->Download)[1]);
 $infos->Downloads++;
 file_put_contents((isset($_GET["isWaiting"]) ? "waiting-resources/" : "resources/") . $_GET["res"] . ".json", json_encode($infos));
-echo file_get_contents("/downloads/" . $infos->Download);
 }

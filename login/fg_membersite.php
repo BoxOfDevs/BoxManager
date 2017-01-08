@@ -350,7 +350,7 @@ class FGMembersite {
             return false;
         }
         
-        $row = mysqli_fetch_assoc($this->connection, $result);
+        $row = mysqli_fetch_assoc($result);
         
         
         $_SESSION['name_of_user']  = $row['name'];
@@ -374,7 +374,7 @@ class FGMembersite {
             $this->HandleError("Wrong confirm code.");
             return false;
         }
-        $row = mysqli_fetch_assoc($this->connection, $result);
+        $row = mysqli_fetch_assoc($result);
         $user_rec['name'] = $row['name'];
         $user_rec['email']= $row['email'];
         
@@ -429,7 +429,7 @@ class FGMembersite {
             $this->HandleError("There is no user with email: $email");
             return false;
         }
-        $user_rec = mysqli_fetch_assoc($this->connection, $result);
+        $user_rec = mysqli_fetch_assoc($result);
 
         
         return true;

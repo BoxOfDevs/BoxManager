@@ -3,6 +3,7 @@ if(file_exists("install/index.php")) {
 	echo "<script>location.replace('install');</script>";
 	exit();
 }
+session_start();
 require_once("./login/membersite_config.php");
 $login = $fgmembersite->CheckLogin();
 ?><html>

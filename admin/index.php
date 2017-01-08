@@ -1,13 +1,7 @@
 <?php
 error_reporting(-1);
-if($_SERVER['GET_METHOD'] = 'POST') {
-    session_start(); //Start the session
-    define(ADMIN,$_SESSION['admin']); //Get the user name from the previously registered super global variable
-}
-if(isset($_POST['username']) or isset($_POST['password']) or isset($_SESSION['admin'])){ //If session not registered
-} else {
-    header("location:login.php"); // Redirect to login.php page
-}
+require_once("../login/membersite_config.php");
+if(!$fgmembersite->isAdmin()) header("location: login.php");
 if(!isset($_GET["s"])) {
     $_GET["s"] = "index";
 }

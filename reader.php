@@ -90,7 +90,7 @@ if(isset($_GET["isWaiting"])) echo "&isWaiting"; ?>">Download resource</a></cent
 					 <section class="special box">
 					 <h2>Ratings</h2><hr/>
 					 <?php 
-					 foreach($infos->Ratings as $p => $rate) {
+					 foreach($infos->Reviews as $p => $rate) {
 						 $r = "";
 						 for($i = 1; $i <= $rate[0]; $i++) {
 							 $r .= "★";
@@ -122,7 +122,7 @@ A;
 					 <u>Version:</u> <?php echo $infos->Version; ?>
 					 <u>Downloads:</u> <?php echo $infos->Downloads; ?>
 					 <u>Category:</u> <?php echo $infos->Category; ?>
-					 <u>Rating:</u> <?php $add = 0;foreach($infos->Ratings as $p => $rate) {$add += $rate[1];}$add /= count($this->Ratings);for($i = 1; $i <= $add; $i++) {$r .= "★";}for($i = 5; $i > $add; $i--) {$r .= "☆";}echo $r ?>
+					 <u>Rating:</u> <?php $add = 0;foreach($infos->Reviews as $p => $rate) {$add += $rate[1];}$add /= count($infos->Reviews);for($i = 1; $i <= $add; $i++) {$r .= "★";}for($i = 5; $i > $add; $i--) {$r .= "☆";}echo $r ?>
 					 </section>
 			     </div>
 			</header>

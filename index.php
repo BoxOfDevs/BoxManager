@@ -60,13 +60,13 @@ foreach(array_diff(scandir("resources/"), array('..', '.')) as $file) {
 		$contents = file_get_contents("resources". DIRECTORY_SEPARATOR . $file);
 		$infos = json_decode($contents);
 		$add = 0;
-		foreach($infos->Ratings as $p => $rate) {
+		foreach($infos->Reviews as $p => $rate) {
 			$add += $rate[1];
 		}
 		$r = "☆☆☆☆☆";
-		if(count($infos->Ratings) !== 0) {
+		if(count($infos->Reviews) !== 0) {
 			$r = "";
-			$add /= count($infos->Ratings);
+			$add /= count($infos->Reviews);
 			$r = str_repeat("★", $add) . str_repeat("☆", 5 - $add);
 		}
 		echo <<<A
@@ -83,22 +83,22 @@ A;
 	} else {
 		$contents = file_get_contents("resources". DIRECTORY_SEPARATOR . $file);
 		$infos = json_decode($contents);
-		if($_GET["category"] == $infos->Category) {
+		if(htmlspecialchars_decode($_GET["category"]) == $infos->Category) {
 			$add = 0;
-			foreach($infos->Ratings as $p => $rate) {
+			foreach($infos->Reviews as $p => $rate) {
 				$add += $rate[1];
 			}
-			$add /= count($this->Ratings);
+			$add /= count($infos->Reviews);
 			$r = str_repeat("★", $add) . str_repeat("☆", 5 - $add);
 		echo <<<A
 <div class='4u'>
 <section class='special box'>
 <a href='reader.php?thread={$infos->Id}'>
-<img src='images/{$infos->Name}.png'></img>
+<img src='images/{$infos->Id}.{$infos->Image}' style="width: 50px; height: 50px;"></img>
 <h3>{$infos->Name}</h3>
 <br />
 <p>{$infos->Title}</p>
-<h4><span style="float: right;">{$r}</span><span style="float: right;">{$infos->Author}</span><span style="float: left;">{$infos->Category}</span></h4>
+<h4>{$r}<br>By {$infos->Author}<br>{$infos->Category}</h4>
 </a></section></div>"
 A;
 		}
@@ -116,26 +116,22 @@ A;
 <div class='4u'>
 <section class='special box'>
 <h3>Categories</h3>
-<table>
-<tr>
 <?php
 $cs = [];
 foreach(json_decode(file_get_contents(__DIR__ . "/configs/config.json"))->Categories as $c) {
 	$cs[$c] = 0;
 }
 foreach(array_diff(scandir(__DIR__ . "/resources"), ["..", "."]) as $i){
-	$c = json_decode(file_get_contents(__DIR__ ."/resources". $i))->Category;
+	$c = json_decode(file_get_contents(__DIR__ ."/resources/". $i))->Category;
 	if(!isset($cs[$c])) {
 		$cs[$c] = 0;
 	}
 	$cs[$c]++;
 }
 foreach($cs as $c => $pls) {
-	echo "<a href='index.php?category=$c'><td>$c</td><td>$pls</td>";
+	echo "<a href='index.php?category=$c' style='text-decoration: none;border-top: solid 1px black;'><span>$c</span> <span style='float: right;'>$pls</span></a>";
 }
 ?>
-</tr>
-</table>
 </section>
 </div>
 </center><br>

@@ -146,6 +146,30 @@ class FGMembersite {
         return isset($_SESSION['name_of_user'])?$_SESSION['name_of_user']:'';
     }
     
+    function isAdmin() {
+
+        $q = mysqli_query($this->connection, "SELECT admin FROM $this->tablename WHERE username='{$this->Username()}'")->fetch_array();
+        return isset($q[0])?$q[0]:false;
+
+    }
+    
+    function setAdmin() {
+
+        return mysqli_query($this->connection, "UPDATE $this->tablename SET admin='true' WHERE username='{$this->Username()}'");
+    }
+    
+    function isMod() {
+
+        $q = mysqli_query($this->connection, "SELECT mod FROM $this->tablename WHERE username='{$this->Username()}'")->fetch_array();
+        return isset($q[0])?$q[0]:false;
+
+    }
+    
+    function setMod() {
+
+        return mysqli_query($this->connection, "UPDATE $this->tablename SET mod='true' WHERE username='{$this->Username()}'");
+    }
+    
     function Username() {
 
         return isset($_SESSION['username'])?$_SESSION['username']:'';
@@ -767,6 +791,8 @@ class FGMembersite {
                 "username VARCHAR( 16 ) NOT NULL ,".
                 "password VARCHAR( 128 ) NOT NULL ,".
                 "confirmcode VARCHAR(128) ,".
+                "mod BOOLEAN ,".
+                "admin BOOLEAN ,".
                 "id_user INT NOT NULL AUTO_INCREMENT ,".
                 "PRIMARY KEY ( id_user )".
                 ")";
@@ -794,6 +820,8 @@ class FGMembersite {
                 "' . $this->SanitizeForSQL($formvars['username']) . '",
                 "' . hash("sha512", $formvars['password']) . '",
                 "' . $confirmcode . '",
+                "false,"
+                "false,"
                 "' . (mysqli_query($this->connection,  "SELECT * FROM $this->tablename")->num_rows + 1) . '"
                 )';      
         if(!mysqli_query($this->connection,  $insert_query)) {

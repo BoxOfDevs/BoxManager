@@ -27,10 +27,11 @@ class BBCode {
 
 
 
-    public function toHTML(string $to) {
+    public function toHTML($to) {
         foreach ($this->codes as $key => $code) {
             $to = preg_replace($key, $code, $to);
         }
+        return $to;
     }
 
 }

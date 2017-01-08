@@ -17,6 +17,19 @@ error_reporting(-1);
 unlink("index.php");
 unlink("delete.php");
 rmdir("../install");
+require_once("../login/membersite_config.php");
+$json = json_decode(file_get_contents("../configs/config.json", true));
+mysqli_query($fgmembersite->connection, "INSERT INTO $fgmembersite->tablename VALUES
+                (
+                '" . $this->SanitizeForSQL($json['Admin username']) . "',
+                '" . $this->SanitizeForSQL("webmaster@" . $_SERVER["SERVER_NAME"]) . "',
+                '" . $this->SanitizeForSQL($json['Admin username']) . "',
+                '" . hash("sha512", $json['Admin password']) . "',
+                'y',
+                'true,'
+                'true,''
+                '1'
+                )';     ")
 ?>
 <button onClick="location.replace('../index.php');">Go to BoxManager</button>
 </body>

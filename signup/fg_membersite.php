@@ -796,7 +796,6 @@ class FGMembersite {
                 "id_user INT NOT NULL AUTO_INCREMENT ,".
                 "PRIMARY KEY ( id_user )".
                 ")";
-        var_dump($this->connection);
         if(!mysqli_query($this->connection, $qry)) {
 
             echo "Error creating the table \nquery was\n $qry. Error: " . mysql_error() . mysqli_connect_error();

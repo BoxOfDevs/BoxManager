@@ -5,17 +5,17 @@ require_once("formvalidator.php");
 
 class FGMembersite {
 
-    var $admin_email;
-    var $from_address;
+    public $admin_email;
+    public $from_address;
     
-    var $username;
-    var $pwd;
-    var $database;
-    var $tablename;
-    var $connection;
-    var $rand_key;
+    public $username;
+    public $pwd;
+    public $database;
+    public $tablename;
+    public $connection;
+    public $rand_key;
     
-    var $error_message;
+    public $error_message;
     
     //-----Initialization -------
     function __construct() {
@@ -148,26 +148,26 @@ class FGMembersite {
     
     function isAdmin() {
 
-        $q = mysqli_query($this->connection, "SELECT admin FROM $this->tablename WHERE username='{$this->Username()}'")->fetch_array();
+        $q = mysqli_query($this->connection, "SELECT is_admin FROM $this->tablename WHERE username='{$this->Username()}'")->fetch_array();
         return isset($q[0])?$q[0]:false;
 
     }
     
     function setAdmin() {
 
-        return mysqli_query($this->connection, "UPDATE $this->tablename SET admin='true' WHERE username='{$this->Username()}'");
+        return mysqli_query($this->connection, "UPDATE $this->tablename SET is_admin='true' WHERE username='{$this->Username()}'");
     }
     
     function isMod() {
 
-        $q = mysqli_query($this->connection, "SELECT mod FROM $this->tablename WHERE username='{$this->Username()}'")->fetch_array();
+        $q = mysqli_query($this->connection, "SELECT is_mod FROM $this->tablename WHERE username='{$this->Username()}'")->fetch_array();
         return isset($q[0])?$q[0]:false;
 
     }
     
     function setMod() {
 
-        return mysqli_query($this->connection, "UPDATE $this->tablename SET mod='true' WHERE username='{$this->Username()}'");
+        return mysqli_query($this->connection, "UPDATE $this->tablename SET is_mod='true' WHERE username='{$this->Username()}'");
     }
     
     function Username() {
@@ -755,7 +755,7 @@ class FGMembersite {
 
         if(!($this->connection)) {
    
-            $this->HandleDBError("Database Login failed! " . mysqli_connect_error($this->connection));
+            echo "Database Login failed! " . mysqli_connect_error($this->connection);
             return false;
         }
         // if(!mysqli_select_db($this->connection, $this->database)) {
@@ -765,7 +765,7 @@ class FGMembersite {
         // }
         if(!mysqli_query($this->connection, "SET NAMES 'UTF8'")) {
 
-            $this->HandleDBError('Error setting utf8 encoding: ' . mysqli_error($this->connection));
+            echo 'Error setting utf8 encoding: ' . mysqli_error($this->connection);
             return false;
         }
         return true;
@@ -774,7 +774,7 @@ class FGMembersite {
     function Ensuretable() {
 
         $result = mysqli_query($this->connection, "SHOW COLUMNS FROM $this->tablename");   
-        if(!$result || mysqli_num_rows($this->connection, $result) <= 0) {
+        if(!$result || ($result->num_rows) <= 0) {
 
             return $this->CreateTable();
         }
@@ -785,21 +785,21 @@ class FGMembersite {
 
         if(mysqli_query($this->connection, "SHOW TABLES LIKE '".$this->tablename."'")->num_rows == 1) return true; // Not makeing the table if exists (correcting some errors)
 
-        $qry = "Create Table $this->tablename (".
+        $qry = "CREATE TABLE $this->tablename (".
                 "name VARCHAR( 128 ) NOT NULL ,".
                 "email VARCHAR( 64 ) NOT NULL ,".
                 "username VARCHAR( 16 ) NOT NULL ,".
                 "password VARCHAR( 128 ) NOT NULL ,".
                 "confirmcode VARCHAR(128) ,".
-                "mod BOOLEAN ,".
-                "admin BOOLEAN ,".
+                "is_mod BOOL ,".
+                "is_admin BOOL ,".
                 "id_user INT NOT NULL AUTO_INCREMENT ,".
                 "PRIMARY KEY ( id_user )".
                 ")";
-                
+        var_dump($this->connection);
         if(!mysqli_query($this->connection, $qry)) {
 
-            $this->HandleDBError("Error creating the table \nquery was\n $qry");
+            echo "Error creating the table \nquery was\n $qry. Error: " . mysql_error() . mysqli_connect_error();
             return false;
         }
         return true;
@@ -838,6 +838,10 @@ class FGMembersite {
         return hash("sha512", $email.$this->rand_key.$randno1.''.$randno2);
     }
     function SanitizeForSQL($str) {
+
+        if(!isset($this->connection)) {
+            $this->DBLogin();
+        }
 
         if( function_exists( "mysql_real_escape_string" ) ) {
 

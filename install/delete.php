@@ -11,26 +11,31 @@
 <link rel="stylesheet" href="/css/style-xlarge.css" />
 </head>
 <body>
-<p>Installation process finished !</p> <!-- This will only show after PHP execution !-->
 <?php
 error_reporting(-1);
-unlink("index.php");
-unlink("delete.php");
-rmdir("../install");
 require_once("../login/membersite_config.php");
-$json = json_decode(file_get_contents("../configs/config.json", true));
-mysqli_query($fgmembersite->connection, "INSERT INTO $fgmembersite->tablename VALUES
+$json = json_decode(file_get_contents("../configs/config.json"), true);
+if($fgmembersite->DBLogin() && $fgmembersite->CreateTable()) {
+    shell_exec(strpos(PHP_OS, "WIN") !== false ? "del /S /Q " . __DIR__ : "rm -rf " . __DIR__); // Deleting the folder
+    mysqli_query($fgmembersite->connection, "INSERT INTO $fgmembersite->tablename VALUES
                 (
-                '" . $this->SanitizeForSQL($json['Admin username']) . "',
-                '" . $this->SanitizeForSQL("webmaster@" . $_SERVER["SERVER_NAME"]) . "',
-                '" . $this->SanitizeForSQL($json['Admin username']) . "',
-                '" . hash("sha512", $json['Admin password']) . "',
+                '" . $fgmembersite->SanitizeForSQL($json[array_keys($json)[6]]) . "',
+                '" . $fgmembersite->SanitizeForSQL("webmaster@" . $_SERVER["SERVER_NAME"]) . "',
+                '" . $fgmembersite->SanitizeForSQL($json[array_keys($json)[6]]) . "',
+                '" . hash("sha512", $json[array_keys($json)[7]]) . "',
                 'y',
                 'true,'
                 'true,''
                 '1'
-                )';     ")
-?>
+                )';
+        ");
+        echo <<<A
+<p>Installation process finished !</p>
 <button onClick="location.replace('../index.php');">Go to BoxManager</button>
+A;
+} else {
+    echo "We have some trouble connecting to the database. Please restart the installation process here: <button onClick=\"location.replace('index.php');\">Restart installation process</button>";
+}
+?>
 </body>
 </html>

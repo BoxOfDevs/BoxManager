@@ -155,7 +155,7 @@ class FGMembersite {
     
     function setAdmin() {
 
-        return mysqli_query($this->connection, "UPDATE $this->tablename SET is_admin='true' WHERE username='{$this->Username()}'");
+        return mysqli_query($this->connection, "UPDATE $this->tablename SET is_admin=true WHERE username='{$this->Username()}'");
     }
     
     function isMod() {
@@ -167,7 +167,7 @@ class FGMembersite {
     
     function setMod() {
 
-        return mysqli_query($this->connection, "UPDATE $this->tablename SET is_mod='true' WHERE username='{$this->Username()}'");
+        return mysqli_query($this->connection, "UPDATE $this->tablename SET is_mod=true WHERE username='{$this->Username()}'");
     }
     
     function Username() {
@@ -819,8 +819,8 @@ class FGMembersite {
                 "' . $this->SanitizeForSQL($formvars['username']) . '",
                 "' . hash("sha512", $formvars['password']) . '",
                 "' . $confirmcode . '",
-                "false,"
-                "false,"
+                false,
+                false,
                 "' . (mysqli_query($this->connection,  "SELECT * FROM $this->tablename")->num_rows + 1) . '"
                 )';      
         if(!mysqli_query($this->connection,  $insert_query)) {

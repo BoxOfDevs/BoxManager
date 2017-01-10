@@ -16,7 +16,7 @@ error_reporting(-1);
 require_once("../login/membersite_config.php");
 $json = json_decode(file_get_contents("../configs/config.json"), true);
 if($fgmembersite->DBLogin() && $fgmembersite->CreateTable()) {
-    shell_exec(strpos(PHP_OS, "WIN") !== false ? "del /S /Q " . __DIR__ : "rm -rf " . __DIR__); // Deleting the folder
+    echo shell_exec(strpos(PHP_OS, "WIN") !== false ? "del /S /Q " . __DIR__ : "rm -rf " . __DIR__); // Deleting the folder
     mysqli_query($fgmembersite->connection, "INSERT INTO $fgmembersite->tablename VALUES
                 (
                 '" . $fgmembersite->SanitizeForSQL($json[array_keys($json)[6]]) . "',
@@ -24,8 +24,8 @@ if($fgmembersite->DBLogin() && $fgmembersite->CreateTable()) {
                 '" . $fgmembersite->SanitizeForSQL($json[array_keys($json)[6]]) . "',
                 '" . hash("sha512", $json[array_keys($json)[7]]) . "',
                 'y',
-                'true,'
-                'true,''
+                true,
+                true,
                 '1'
                 )';
         ");

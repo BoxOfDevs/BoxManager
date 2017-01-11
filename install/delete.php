@@ -17,7 +17,7 @@ require_once("../login/membersite_config.php");
 $json = json_decode(file_get_contents("../configs/config.json"), true);
 if($fgmembersite->DBLogin() && $fgmembersite->CreateTable()) {
     echo shell_exec(strpos(PHP_OS, "WIN") !== false ? "del /S /Q " . __DIR__ : "rm -rf " . __DIR__); // Deleting the folder
-    mysqli_query($fgmembersite->connection, "INSERT INTO $fgmembersite->tablename VALUES
+    $query = "INSERT INTO $fgmembersite->tablename VALUES
                 (
                 '" . $fgmembersite->SanitizeForSQL($json[array_keys($json)[6]]) . "',
                 '" . $fgmembersite->SanitizeForSQL("webmaster@" . $_SERVER["SERVER_NAME"]) . "',
@@ -27,8 +27,12 @@ if($fgmembersite->DBLogin() && $fgmembersite->CreateTable()) {
                 true,
                 true,
                 '1'
-                )';
-        ");
+                )
+    ";
+    echo $query;
+    if(!mysqli_query($fgmembersite->connection, $query)) {
+        echo mysqli_error();
+    }
         echo <<<A
 <p>Installation process finished !</p>
 <button onClick="location.replace('../index.php');">Go to BoxManager</button>

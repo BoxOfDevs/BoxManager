@@ -148,31 +148,51 @@ class FGMembersite {
     
     function isAdmin() {
 
+        if(!$this->DBLogin()) {
+            echo "Could not contact DB";
+            return false;
+        }
+
         $q = mysqli_query($this->connection, "SELECT is_admin FROM $this->tablename WHERE username='{$this->Username()}'")->fetch_array();
-        return isset($q[0])?$q[0]:false;
+        return isset($q[0])? (bool) $q[0]:false;
 
     }
     
     function setAdmin() {
+
+        if(!$this->DBLogin()) {
+            echo "Could not contact DB";
+            return false;
+        }
 
         return mysqli_query($this->connection, "UPDATE $this->tablename SET is_admin=true WHERE username='{$this->Username()}'");
     }
     
     function isMod() {
 
+        if(!$this->DBLogin()) {
+            echo "Could not contact DB";
+            return false;
+        }
+
         $q = mysqli_query($this->connection, "SELECT is_mod FROM $this->tablename WHERE username='{$this->Username()}'")->fetch_array();
-        return isset($q[0])?$q[0]:false;
+        return isset($q[0])? (bool) $q[0]:false;
 
     }
     
     function setMod() {
+
+        if(!$this->DBLogin()) {
+            echo "Could not contact DB";
+            return false;
+        }
 
         return mysqli_query($this->connection, "UPDATE $this->tablename SET is_mod=true WHERE username='{$this->Username()}'");
     }
     
     function Username() {
 
-        return isset($_SESSION['username'])?$_SESSION['username']:'';
+        return isset($_SESSION[$this->GetLoginSessionVar()])?$_SESSION[$this->GetLoginSessionVar()]:'';
     }
     
     function UserEmail() {
@@ -384,7 +404,6 @@ class FGMembersite {
         
         $_SESSION['name_of_user']  = $row['name'];
         $_SESSION['email_of_user'] = $row['email'];
-        $_SESSION['username'] = $row['username'];
         
         return true;
     }

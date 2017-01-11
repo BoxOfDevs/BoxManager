@@ -170,12 +170,12 @@ A;
 <li><a href="add/">Add resource</a></li>
 A;
                         if($fgmembersite->isAdmin()) {
-                            echo '<li><a href="admin/index.php">Admin CP</a></li>';
+                            echo '<li><a href="../admin/index.php">Admin CP</a></li>';
                         }
                         if($fgmembersite->isMod()) {
                             echo '<li><a href="../moderation-queue.php">Moderation queue</a></li>';
                         }
-                        echo '<li><a href="login/logout.php">Logout</a></li>';
+                        echo '<li><a href="../login/logout.php">Logout</a></li>';
 					}
 					?>
 					</ul>

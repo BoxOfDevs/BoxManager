@@ -2,6 +2,7 @@
 
 require_once("class.phpmailer.php");
 require_once("formvalidator.php");
+require_once("../localapi/User.php");
 
 class FGMembersite {
 
@@ -99,6 +100,18 @@ class FGMembersite {
         
         return true;
     }    
+
+
+    function getCurrentUser() {
+        return new User($this->Username());
+    }
+
+
+    function getUser($name) {
+        return new User($name);
+    }
+
+
     
     function Login() {
 

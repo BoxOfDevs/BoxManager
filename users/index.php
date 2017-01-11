@@ -1,3 +1,12 @@
+<?php
+if(file_exists("install/index.php")) {
+	echo "<script>location.replace('install');</script>";
+	exit();
+}
+session_start();
+require_once("./login/membersite_config.php");
+$login = $fgmembersite->CheckLogin();
+?>
 <html>
 	<head>
 		<title>BoxManager</title>
@@ -46,6 +55,10 @@ A;
 					</ul>
 			</nav>
 </header>
+<section id="one" class="wrapper style1">
+		<header class="major">
+				<div class="container">
+                    
 <?php
 
 /*
@@ -55,3 +68,4 @@ A;
 *|____/ \___/_/\_\_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
 *                                           |___/     
 */
+$fgmembersite->

@@ -20,7 +20,10 @@ class User {
     public function __construct($username) {
         $this->username = $username;
         if(!isset($fgmembersite)) require_once("../login/fg_membersite.php");
-        $this->q = $fgmembersite->query("SELECT * FROM users WHERE username='$username'")->fetch_array()[0];
+        $this->q = $fgmembersite->query("SELECT * FROM users WHERE username='$username'")->fetch_array();
+        if(count($this->q) < 1) $this->q = $fgmembersite->query("SELECT * FROM users WHERE name='$username'")->fetch_array();
+        if(count($this->q) < 1) $this->q = $fgmembersite->query("SELECT * FROM users WHERE email='$username'")->fetch_array();
+        $this->q = $this->q[0];
     }
 
     /*

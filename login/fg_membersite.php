@@ -112,6 +112,17 @@ class FGMembersite {
     }
 
 
+    function getUsers() {
+        if(!$this->DBLogin()) {
+            echo "Could not login to database !";
+        }
+        $users = [];
+        foreach(mysqli_query($this->connection, "SELECT username FROM users")->fetch_array() as $username) {
+            $users[$username] = $this->getUser($name);
+        }
+    }
+
+
     
     function Login() {
 

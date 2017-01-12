@@ -18,19 +18,27 @@ class User {
     @param     $username      string
     */
     public function __construct($username) {
-        $this->username = $username;
-        if(!isset($fgmembersite)) require_once("../login/fg_membersite.php");
-        $this->q = $fgmembersite->query("SELECT * FROM users WHERE username='$username'")->fetch_array();
-        if(count($this->q) < 1) $this->q = $fgmembersite->query("SELECT * FROM users WHERE name='$username'")->fetch_array();
-        if(count($this->q) < 1) $this->q = $fgmembersite->query("SELECT * FROM users WHERE email='$username'")->fetch_array();
-        $this->q = $this->q[0];
+        $this->username = $username; 
+        $this->fgmembersite = new FGMembersite(); 
+        $this->fgmembersite->SetWebsiteName(json_decode(file_get_contents(__DIR__ . "/../configs/config.json"),true)["Site name"]); 
+        $this->fgmembersite->InitDB(/*hostname*/json_decode(file_get_contents(__DIR__ . "/../configs/config.json"),true)["Database address"], 
+                       /*username*/json_decode(file_get_contents(__DIR__. "/../configs/config.json"),true)["Database admin username"], 
+                       /*password*/json_decode(file_get_contents(__DIR__. "/../configs/config.json"),true)["Database admin password"], 
+                       /*database name*/json_decode(file_get_contents(__DIR__ . "/../configs/config.json"),true)["Database name"], 
+                       /*table name*/'users'); 
+        $this->fgmembersite->SetRandomKey('qSRcVS6DrTzrPvr'); 
+        if(!$this->fgmembersite->DBLogin()) echo "Could not login to db!";
+        $this->q = $this->fgmembersite->connection->query("SELECT * FROM users WHERE username='$username'");
+        if($this->q->num_rows < 1) $this->q = $this->fgmembersite->connection->query("SELECT * FROM users WHERE name='$username'");
+        if($this->q->num_rows < 1) $this->q = $this->fgmembersite->connection->query("SELECT * FROM users WHERE email='$username'");
+        $this->q = $this->q->fetch_array();
     }
 
     /*
     Check if player is an admin
     @return bool
     */
-    public function isAdmin() : bool {
+    public function isAdmin() {
         return $this->q["is_admin"];
     }
 
@@ -38,7 +46,7 @@ class User {
     Check if player is an mod
     @return bool
     */
-    public function isMod() : bool {
+    public function isMod() {
         return $this->q["is_mod"];
     }
 
@@ -49,7 +57,7 @@ class User {
     */
     public function setAdmin(bool $to) {
         $bool = (($to) ? "true" : "false");
-        return $fgmembersite->query("UPDATE users SET is_admin='$bool' WHERE username='$username'");
+        return $this->fgmembersite->connection->query("UPDATE users SET is_admin='$bool' WHERE username='$username'");
     }
 
     /*
@@ -59,22 +67,22 @@ class User {
     */
     public function setMod(bool $to) {
         $bool = (($to) ? "true" : "false");
-        return $fgmembersite->query("UPDATE users SET is_mod='$bool' WHERE username='$username'");
+        return $this->fgmembersite->connection->query("UPDATE users SET is_mod='$bool' WHERE username='$username'");
     }
 
     /*
     Return user's id.
     @return int
     */
-    public function getId() : int {
-        return (int) $this->q["id_user"];
+    public function getId() {
+        return $this->q["id_user"];
     }
 
     /*
     Return user's confirmed.
     @return int
     */
-    public function isConfirmed() : bool {
+    public function isConfirmed() {
         return $this->q["confirmcode"] == "y";
     }
 
@@ -90,23 +98,23 @@ class User {
     Return user's name.
     @return string
     */
-    public function getName() : string {
-        return (string) $this->q["name"];
+    public function getName() {
+        return $this->q["name"];
     }
 
     /*
     Return user's email.
     @return string
     */
-    public function getEmail() : string {
-        return (string) $this->q["email"];
+    public function getEmail() {
+        return $this->q["email"];
     }
 
     /*
     Return user's email.
     @return string
     */
-    public function getUsername() : string {
-        return (string) $this->q["username"];
+    public function getUsername() {
+        return $this->q["username"];
     }
 }

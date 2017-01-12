@@ -6,7 +6,8 @@ if(file_exists("install/index.php")) {
 session_start();
 require_once("./login/membersite_config.php");
 $login = $fgmembersite->CheckLogin();
-?><html>
+?>
+<html>
 	<head>
 		<title>BoxManager</title>
 		<link rel="icon" href="favicon.png" />

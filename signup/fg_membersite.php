@@ -2,7 +2,7 @@
 
 require_once("class.phpmailer.php");
 require_once("formvalidator.php");
-require_once("../localapi/User.php");
+require_once(__DIR__ . "/../localapi/User.php");
 
 class FGMembersite {
 
@@ -117,9 +117,14 @@ class FGMembersite {
             echo "Could not login to database !";
         }
         $users = [];
-        foreach(mysqli_query($this->connection, "SELECT username FROM users")->fetch_array() as $username) {
-            $users[$username] = $this->getUser($name);
+        $qry = mysqli_query($this->connection, "SELECT username FROM users");
+        if(!$qry) {
+            echo "Could not query: " . mysqli_error();
         }
+        foreach($qry->fetch_array() as $username) {
+            $users[$username] = $this->getUser($username);
+        }
+        return $users;
     }
 
 

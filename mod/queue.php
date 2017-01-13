@@ -7,19 +7,19 @@ if(isset($_GET["approve"])) {
 }
 
 ?>
-<html><head><title>BoxManager</title>
-<link rel="icon" href="favicon.png" />
-<script src="/js/jquery.min.js"></script>
-<script src="/js/skel.min.js"></script>
-<script src="/js/skel-layers.min.js"></script>
-<script src="/js/init.js"></script>
-<link rel="stylesheet" href="/css/skel.css" />
-<link rel="stylesheet" href="/css/style.css" />
-<link rel="stylesheet" href="/css/style-xlarge.css" />
+<html><head><title>BoxManager - Moderation Queue</title>
+<link rel="icon" href="../favicon.png" />
+<script src="../js/jquery.min.js"></script>
+<script src="../js/skel.min.js"></script>
+<script src="../js/skel-layers.min.js"></script>
+<script src="../js/init.js"></script>
+<link rel="stylesheet" href="../css/skel.css" />
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/style-xlarge.css" />
 </head>
 <body>
 <header id="header" class="skel-layers-fixed">
-				<a href="<?php echo json_decode(file_get_contents("configs/config.json"), true)["Site Main"] ?>"><img src="images/logo.png" height="43" width="43"></img><?php echo json_decode(file_get_contents("configs/config.json"))->{"Site Name"}; ?></a>
+				<a href="<?php echo json_decode(file_get_contents("../configs/config.json"), true)["Site Main"] ?>"><img src="images/logo.png" height="43" width="43"></img><?php echo json_decode(file_get_contents("../configs/config.json"))->{"Site Name"}; ?></a>
 				<nav id="nav">
 					<ul>
 					<?php
@@ -32,16 +32,16 @@ if(isset($_GET["approve"])) {
 					} else {
 						echo <<<A
 <li>Welcome back, {$fgmembersite->UserFullName()}</li>
-<li><a href="add/">Add resource</a></li>
+<li><a href="../add/">Add resource</a></li>
 A;
 A;
                         if($fgmembersite->isAdmin()) {
-                            echo '<li><a href="admin/index.php">Admin CP</a></li>';
+                            echo '<li><a href="../admin/index.php">Admin CP</a></li>';
                         }
                         if($fgmembersite->isMod()) {
-                            echo '<li><a href="../moderation-queue.php">Moderation queue</a></li>';
+                            echo '<li><a href="#">Moderation queue</a></li>';
                         }
-                        echo '<li><a href="login/logout.php">Logout</a></li>';
+                        echo '<li><a href="../login/logout.php">Logout</a></li>';
 					}
 					?>
 					</ul>
@@ -56,11 +56,11 @@ A;
 $c = 0;
 error_reporting(-1);
 if(file_exists("install/index.php")) {
-	echo "<script>location.replace('install/index.php')</script>";
+	echo "<script>location.replace('../install/index.php')</script>";
 }
-foreach(array_diff(scandir("waiting-resources/"), array('..', '.')) as $file) {
+foreach(array_diff(scandir(".../waiting-resources/"), array('..', '.')) as $file) {
 	if(!isset($_GET["category"])) {
-		$contents = file_get_contents("resources". DIRECTORY_SEPARATOR . $file);
+		$contents = file_get_contents("../waiting-resources". DIRECTORY_SEPARATOR . $file);
 		$infos = json_decode($contents);
 		$add = 0;
 		foreach($infos->Ratings as $p => $rate) {
@@ -76,7 +76,7 @@ foreach(array_diff(scandir("waiting-resources/"), array('..', '.')) as $file) {
 		echo <<<A
 <div class='4u'>
 <section class='special box'>
-<a href='reader.php?thread={$infos->Id}&isWaiting=true'>
+<a href='r../eader.php?thread={$infos->Id}&isWaiting=true'>
 <img src='images/{$infos->Name}.png'></img>
 <h3>{$infos->Name}</h3>
 <br />
@@ -85,10 +85,10 @@ foreach(array_diff(scandir("waiting-resources/"), array('..', '.')) as $file) {
 </a></section></div>"
 A;
 	} else {
-		$contents = file_get_contents("waiting-resources". DIRECTORY_SEPARATOR . $file);
+		$contents = file_get_contents("../waiting-resources". DIRECTORY_SEPARATOR . $file);
 		$infos = json_decode($contents);
 		$cs = [];
-		foreach(json_decode(file_get_contents("configs/config.json"))["Categories"] as $c){
+		foreach(json_decode(file_get_contents("../configs/config.json"))["Categories"] as $c){
 			if(!isset($cs[$c])) {
 				$cs[$c] = 0;
 			}
@@ -109,7 +109,7 @@ A;
 		echo <<<A
 <div class='4u'>
 <section class='special box'>
-<a href='reader.php?thread={$infos->Id}'>
+<a href='../reader.php?thread={$infos->Id}&isWaiting=true'>
 <img src='images/{$infos->Name}.png'></img>
 <h3>{$infos->Name}</h3>
 <br />

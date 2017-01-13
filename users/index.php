@@ -10,7 +10,7 @@ $login = $fgmembersite->CheckLogin();
 <html>
 	<head>
 		<title>BoxManager</title>
-		<link rel="icon" href="favicon.png" />
+		<link rel="icon" href="../favicon.png" />
 		<script src="../js/jquery.min.js"></script>
 		<script src="../js/skel.min.js"></script>
 		<script src="../js/skel-layers.min.js"></script>
@@ -29,7 +29,7 @@ $login = $fgmembersite->CheckLogin();
 	</head>
 <body>
 	<header id="header" class="skel-layers-fixed">
-				<a href="<?php echo json_decode(file_get_contents("../configs/config.json"), true)["Site Main"]; ?>"><img src="images/logo.png" height="43" width="43"></img><?php echo json_decode(file_get_contents("configs/config.json"), true)["Site Name"]; ?></a>
+				<a href="<?php echo json_decode(file_get_contents("../configs/config.json"), true)["Site Main"]; ?>"><img src="../images/logo.png" height="43" width="43"></img><?php echo json_decode(file_get_contents("configs/config.json"), true)["Site Name"]; ?></a>
 				<nav id="nav">
 					<ul>
 					<?php
@@ -47,7 +47,7 @@ A;
                             echo '<li><a href="../admin/index.php">Admin CP</a></li>';
                         }
                         if($fgmembersite->isMod()) {
-                            echo '<li><a href="../moderation-queue.php">Moderation queue</a></li>';
+                            echo '<li><a href="../mod/queue.php">Moderation queue</a></li>';
                         }
                         echo '<li><a href="../login/logout.php">Logout</a></li>';
 					}
@@ -79,3 +79,9 @@ if(isset($_GET["n"])) {
     }
     echo "</table>";
 }
+?>
+                    </div>
+            </header>
+        </section>
+    </body>
+</html>

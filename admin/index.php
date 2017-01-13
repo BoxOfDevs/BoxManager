@@ -1,7 +1,7 @@
 <?php
 error_reporting(-1);
 require_once("../login/membersite_config.php");
-if(!$fgmembersite->isAdmin()) header("location: ../login/login.php");
+if(!$fgmembersite->isAdmin()) header("Location: httplocation: ../login/login.php");
 if(!isset($_GET["s"])) {
     $_GET["s"] = "index";
 }

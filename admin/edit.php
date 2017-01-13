@@ -1,9 +1,9 @@
 <?php
 error_reporting(-1);
 require_once("../login/membersite_config.php");
-if(!$fgmembersite->isAdmin()) header("location: login.php");
+if(!$fgmembersite->isAdmin()) header("Location: httplocation: login.php");
 if(!isset($_GET["id"])) {
-    header("location: index.php?s=resources");
+    header("Location: httplocation: index.php?s=resources");
 }
 if(isset($_GET["save"])) {
     $json = json_decode(file_get_contents("resources/{$_GET['id']}.json"));
@@ -37,6 +37,6 @@ if(isset($_GET["save"])) {
 <table>
 <tr><td><button class="alt" onClick="document.getElementById('save').src = 'edit.php?id=<? echo $_GET['id']; ?>&save=' + document.getElementById('desc').value;">Save</button><td><td><button class="alt">Cancel</button></td></tr>
 </table>
-<input style="width: 100%; height: 100%;" type="text" id="desc" value="<?php echo json_decode(file_get_contents("resources/$_GET['id'].json"))->Text; ?>" />
+<input style="width: 100%; height: 100%;" type="text" id="desc" value="<?php echo json_decode(file_get_contents("resources/{$_GET['id']}.json"))->Text; ?>" />
 <iframe id="save" src="" style='width: 0%; height: 0%;' frameborder=0></iframe>
 </body>

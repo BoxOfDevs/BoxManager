@@ -1,6 +1,6 @@
 <?php
 if(file_exists("install/index.php")) {
-	echo "<script>location.replace('install');</script>";
+	header("Location: httpinstall");
 	exit();
 }
 session_start();

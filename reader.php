@@ -17,14 +17,14 @@ if (isset($_GET["thread"])) {
 	$id = htmlspecialchars($_GET["thread"]);
 	if(!isset($_GET["isWaiting"])) {
 		if(!file_exists("resources/$id.json")) {
-			echo "<script>location.replace('index.php');</script>";
+			header("Location: httpindex.php");
 			exit();
 		} else {
 			$infos = json_decode(file_get_contents("resources/$id.json"));
 		}
 	} else {
 		if(!file_exists("waiting-resources/$id.json")) {
-			echo "<script>location.replace('index.php');</script>";
+			header("Location: httpindex.php");
 			exit();
 		} else {
 			$infos = json_decode(file_get_contents("waiting-resources/$id.json"));
@@ -32,7 +32,7 @@ if (isset($_GET["thread"])) {
 	}
 }
 if(!isset($id)) {
-	echo "<script>location.replace('index.php');</script>";
+	header("Location: httpindex.php");
 	exit();
 }
 ?>

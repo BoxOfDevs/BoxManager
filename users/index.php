@@ -1,6 +1,6 @@
 <?php
 if(file_exists("install/index.php")) {
-	header("Location: httpinstall");
+	header("Location: install");
 	exit();
 }
 session_start();

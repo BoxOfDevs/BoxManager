@@ -359,7 +359,7 @@ class FGMembersite {
     
     function RedirectToURL($url) {
 
-        header("Location: httpLocation: $url");
+        header("Location: $url");
         exit;
     }
     

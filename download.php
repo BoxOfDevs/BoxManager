@@ -2,7 +2,7 @@
 require_once("login/fg_membersite.php");
 error_reporting(-1);
 if(!$isResourcesApprover and isset($_GET["isWaiting"])) {
-    header("Location: httpindex.php");
+    header("Location: index.php");
 } else {
 $infos = json_decode(file_get_contents((isset($_GET["isWaiting"]) ? "waiting-resources/" : "resources/") . $_GET["res"] . ".json"));
 

@@ -1,9 +1,9 @@
 <?php
 error_reporting(-1);
 require_once("../login/membersite_config.php");
-if(!$fgmembersite->isAdmin()) header("Location: httplocation: login.php");
+if(!$fgmembersite->isAdmin()) header("Location: login.php");
 if(!isset($_GET["id"])) {
-    header("Location: httplocation: index.php?s=resources");
+    header("Location: index.php?s=resources");
 }
 if(isset($_GET["save"])) {
     $json = json_decode(file_get_contents("resources/{$_GET['id']}.json"));
